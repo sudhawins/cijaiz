@@ -4445,9 +4445,9 @@ app.post('/api/daily-status/:id/guest-checkins', async (req: Request, res: Respo
     const insertResult = await pool.request()
       .input('dailyStatusId', sql.Int, parseInt(id))
       .input('guestName', sql.NVarChar(150), guestName.trim())
-      .input('phoneNumber', sql.VarChar(25), normalizedPhone)
+      .input('phoneNumber', sql.NVarChar(25), normalizedPhone)
       .input('purpose', sql.NVarChar(500), purpose.trim())
-      .input('visitingRoomNo', sql.VarChar(20), visitingRoomNo?.trim() || null)
+      .input('visitingRoomNo', sql.NVarChar(20), visitingRoomNo?.trim() || null)
       .input('rentAmount', sql.Decimal(10, 2), parsedRentAmount)
       .input('depositAmount', sql.Decimal(10, 2), parsedDepositAmount)
       .input('checkInTime', sql.DateTime, parsedCheckInTime)
@@ -4723,8 +4723,8 @@ app.post('/api/daily-status/:dailyStatusId/guest-checkins/:guestCheckinId/upload
       await pool.request()
         .input('dailyStatusId', sql.Int, dailyStatusIdInt)
         .input('guestCheckinId', sql.Int, guestCheckinIdInt)
-        .input('proofUrl', sql.VarChar(1000), proofUrl)
-        .input('photoUrl', sql.VarChar(1000), photoUrl)
+        .input('proofUrl', sql.NVarChar(1000), proofUrl)
+        .input('photoUrl', sql.NVarChar(1000), photoUrl)
         .query(`
           UPDATE DailyGuestCheckIn
           SET
