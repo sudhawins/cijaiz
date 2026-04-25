@@ -1,0 +1,19 @@
+meta {
+  name: New HTTP Request
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:5002/api/discounts/seller/adjust-points
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInVzZXJOYW1lIjoic3VkaGF3aW5zQGdtYWlsLmNvbSIsIm5hbWUiOiJTdWRoYWEgVmlqYXlhbmFudGhhbiIsInJvbGVUeXBlIjoiU2VsbGVyIiwicm9sZUlkIjoxMSwiaWF0IjoxNzczNTY3NTEyLCJleHAiOjE3NzM2NTM5MTJ9.CJ_Fx-t731Zefr02rOrFqibLxgySEX7ZdDph77K9QnU
+}
+
+body:json {
+  {"customerEmail":"accountant_user","pointsAdjustment":2,"reason":"reff"}
+}

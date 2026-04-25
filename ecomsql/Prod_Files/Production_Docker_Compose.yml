@@ -1,0 +1,82 @@
+services:
+  # Nginx reverse proxy (main entry point)
+  # nginx:
+  #   image: nginx:latest
+  #   container_name: nginx_proxy
+  #   ports:
+  #     - "80:90"   # host:container mapping
+  #     - "443:443"
+  #   volumes:
+  #     - /home/ubuntu/config/nginx.conf:/etc/nginx/nginx.conf:ro
+  #     - /home/ubuntu/config/certs:/etc/letsencrypt:ro
+  #     - /home/ubuntu/config/html:/var/www/html
+  #   depends_on:
+  #     - frontend
+  #     - backend
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         cpus: "0.2"      # Max 50% of a CPU per container
+  #         memory: 64M     # Max 512 MB RAM per container
+  #       reservations:
+  #         cpus: "0.1"     # Reserve 25% of a CPU
+  #         memory: 32M     # Reserve 256 MB RAM
+  #   networks:
+  #     - mansion-network
+
+  # Frontend application
+  client:
+    image: 555cijaiz555/ecomc:v4
+    ports:
+      - "3002:3002"
+    environment:
+      - REACT_APP_API_URL=${REACT_APP_API_URL:-http://mansion.gnanabi.info/api}
+      - PORT=3002
+    expose:
+      - 3002
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 125M
+    depends_on:
+      - server
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./app.conf:/etc/nginx/conf.d/app.conf
+    networks:
+      - mansion-network
+    restart: on-failure
+
+  # Backend API server
+  server:
+    image: 555cijaiz555/ecoms:v3
+    environment:
+      - NODE_ENV=production
+      - PORT=5002
+      - CLIENT_URL=http://mansion.gnanabi.info
+      - DB_SERVER=${DB_SERVER:-gnanabi.database.windows.net}
+      - DB_NAME=${DB_NAME:-mansion}
+      - DB_USER=${DB_USER:-servergnanaabi}
+      - DB_PASSWORD=${DB_PASSWORD:-serverpassword@123}
+      - DB_PORT=${DB_PORT:-1433}
+    volumes:
+      - ./server/uploads:/app/uploads
+    ports:
+      - "5002"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 124M
+    networks:
+      - mansion-network
+    restart: on-failure
+
+networks:
+  mansion-network:
+    driver: bridge
+
+volumes:
+  server-uploads:
+    driver: local

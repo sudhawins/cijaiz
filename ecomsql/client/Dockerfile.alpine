@@ -1,0 +1,53 @@
+# Dockerfile.alpine
+# Alternative Dockerfile using Alpine Linux with build tools
+# Use this if node:18-slim has issues: docker build -f Dockerfile.alpine -t ecommerce-client .
+
+# Build stage
+FROM node:18-alpine as builder
+
+WORKDIR /app
+
+# Install build essentials for Alpine (needed for native module compilation)
+# apk is Alpine's package manager, it's faster but minimal
+RUN apk add --no-cache --virtual .build-deps \
+    python3 \
+    make \
+    g++ \
+    gcc \
+    cairo-dev
+
+# Copy package files
+COPY package.json package-lock.json .npmrc* ./
+
+# Install dependencies
+# Using npm install with optimization flags
+RUN npm install --prefer-offline --no-audit --legacy-peer-deps 2>&1 && \
+    npm cache clean --force
+
+# Copy source code
+COPY public public/
+COPY src src/
+
+# Build the application
+RUN npm run build && \
+    rm -rf node_modules
+
+# Production stage
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Install serve and clean npm cache to reduce image size
+RUN npm install -g serve && npm cache clean --force
+
+# Copy built application from builder stage
+COPY --from=builder /app/build build/
+
+# Expose port 3002
+EXPOSE 3002
+
+# Set environment to production
+ENV NODE_ENV=production
+
+# Start the application
+CMD ["serve", "-s", "build", "-l", "3002"]

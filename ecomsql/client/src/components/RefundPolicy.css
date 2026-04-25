@@ -1,0 +1,106 @@
+.refund-policy-page {
+  min-height: 100vh;
+  background: #f5f5f5;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.refund-page-header {
+  background: #232f3e;
+  color: #ffffff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.refund-header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.refund-brand {
+  font-size: 22px;
+  font-weight: 700;
+  color: #FF9900;
+  text-decoration: none;
+  letter-spacing: -0.5px;
+}
+
+.refund-brand:hover {
+  color: #ffb84d;
+}
+
+.refund-back-link {
+  font-size: 14px;
+  color: #ccc;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.refund-back-link:hover {
+  color: #FF9900;
+}
+
+.refund-policy-container {
+  max-width: 800px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 32px 28px;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  color: #222;
+}
+.refund-policy-container h1 {
+  font-size: 2.2rem;
+  color: #1a73e8;
+  margin-bottom: 18px;
+}
+.refund-policy-container h2 {
+  font-size: 1.25rem;
+  color: #333;
+  margin-top: 28px;
+  margin-bottom: 10px;
+}
+.refund-policy-container ul, .refund-policy-container ol {
+  margin-left: 24px;
+  margin-bottom: 12px;
+}
+.refund-policy-container li {
+  margin-bottom: 6px;
+  line-height: 1.6;
+}
+.refund-policy-container .disclaimer {
+  margin-top: 32px;
+  font-size: 0.98rem;
+  color: #b71c1c;
+  background: #fff3f3;
+  padding: 10px 16px;
+  border-radius: 6px;
+}
+
+.whatsapp-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #25D366;
+  font-weight: 600;
+  text-decoration: none;
+  vertical-align: middle;
+}
+
+.whatsapp-link:hover {
+  text-decoration: underline;
+}
+
+.whatsapp-icon {
+  width: 22px;
+  height: 22px;
+  vertical-align: middle;
+  flex-shrink: 0;
+}

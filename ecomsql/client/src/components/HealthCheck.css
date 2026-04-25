@@ -1,0 +1,107 @@
+.health-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  min-width: fit-content;
+  align-self: center;
+}
+
+.health-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.health-healthy {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.health-healthy .health-indicator {
+  background-color: #28a745;
+}
+
+.health-unhealthy {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.health-unhealthy .health-indicator {
+  background-color: #dc3545;
+  animation: pulse-fast 1s infinite;
+}
+
+.health-checking {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeaa7;
+}
+
+.health-checking .health-indicator {
+  background-color: #ffc107;
+  animation: pulse-fast 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes pulse-fast {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@media (max-width: 768px) {
+  .health-check {
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+
+  .health-indicator {
+    width: 6px;
+    height: 6px;
+  }
+}
+
+@media (max-width: 600px) {
+  .health-check {
+    font-size: 10px;
+    padding: 5px 8px;
+  }
+
+  .health-indicator {
+    width: 5px;
+    height: 5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .health-check {
+    font-size: 9px;
+    padding: 4px 6px;
+  }
+
+  .health-indicator {
+    width: 4px;
+    height: 4px;
+  }
+}
