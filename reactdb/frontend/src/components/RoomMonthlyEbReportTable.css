@@ -1,0 +1,232 @@
+.eb-report-section {
+  margin-top: 24px;
+  background: #ffffff;
+  border: 1px solid #dbe2ea;
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.eb-report-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.eb-report-header h3 {
+  margin: 0;
+  color: #1f2937;
+}
+
+.eb-report-filters {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.eb-report-filters select,
+.eb-report-filters button {
+  padding: 6px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.eb-report-filters button {
+  background: #2563eb;
+  color: #fff;
+  cursor: pointer;
+  border-color: #2563eb;
+}
+
+.eb-report-loading,
+.eb-report-empty {
+  padding: 16px;
+  color: #475569;
+}
+
+.eb-report-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.eb-report-category-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.eb-report-category-header {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.eb-report-category-header-shop {
+  color: #92400e;
+  background: #fef3c7;
+  border: 1px solid #fcd34d;
+}
+
+.eb-report-category-header-residential {
+  color: #1d4ed8;
+  background: #dbeafe;
+  border: 1px solid #93c5fd;
+}
+
+.eb-report-category-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.eb-report-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px;
+  background: #f8fafc;
+}
+
+.eb-report-card-shop {
+  border-left: 4px solid #f59e0b;
+  background: linear-gradient(135deg, #fffaf0 0%, #fffdf7 100%);
+}
+
+.eb-report-card-residential {
+  border-left: 4px solid #2563eb;
+  background: linear-gradient(135deg, #f3f8ff 0%, #f8fbff 100%);
+}
+
+.eb-report-card-vacant {
+  border-color: #fca5a5;
+  background: #fff1f2;
+}
+
+.eb-report-card-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+  color: #0f172a;
+}
+
+.eb-report-vacant-badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: #9f1239;
+  background: #ffe4e6;
+  border: 1px solid #fecdd3;
+}
+
+.eb-report-active-tenant {
+  margin-top: 4px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #0369a1;
+}
+
+.eb-report-active-tenant-vacant {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  color: #9f1239;
+  background: #ffe4e6;
+  border: 1px solid #fecdd3;
+}
+
+.eb-report-category-badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.eb-report-category-shop {
+  color: #92400e;
+  background: #fef3c7;
+  border: 1px solid #fcd34d;
+}
+
+.eb-report-category-residential {
+  color: #1d4ed8;
+  background: #dbeafe;
+  border: 1px solid #93c5fd;
+}
+
+.eb-report-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 8px;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  color: #1e293b;
+}
+
+.eb-report-tenant-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 6px;
+}
+
+.eb-report-table-wrap {
+  overflow-x: auto;
+}
+
+.eb-report-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+.eb-report-table th,
+.eb-report-table td {
+  border: 1px solid #e2e8f0;
+  padding: 8px;
+  text-align: left;
+  font-size: 0.85rem;
+}
+
+.eb-report-table th {
+  background: #eef2ff;
+  color: #1e3a8a;
+}
+
+.no-tenant-row {
+  text-align: center;
+  color: #64748b;
+  background: #fff7ed;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .eb-report-filters {
+    width: 100%;
+  }
+
+  .eb-report-filters select,
+  .eb-report-filters button {
+    flex: 1;
+  }
+}

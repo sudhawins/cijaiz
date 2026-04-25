@@ -1,0 +1,23 @@
+meta {
+  name: Create Daily Status
+  type: http
+  seq: 7
+}
+
+post {
+  url: http://localhost:5000/api/daily-status
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "occupancyId": 1,
+    "statusDate": "2026-04-11",
+    "notes": "Routine daily entry"
+  }
+}

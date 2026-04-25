@@ -1,0 +1,27 @@
+# SSL directory - contains certificates and private keys
+# IMPORTANT: Never commit private keys (.key files) to version control!
+
+# Ignore all files in this directory by default
+*
+
+# But track these instruction files
+!.gitignore
+!generate-certs.ps1
+!generate-certs.sh
+!.placeholder
+
+# Certificates (.crt) can be tracked if they're for development only
+# Uncomment if desired (but NOT for production):
+# !nginx.crt
+
+# SECURITY WARNING:
+# Private key files (.key) MUST NEVER be committed to git
+# If accidentally committed:
+#   1. Revoke the certificate immediately
+#   2. Generate a new certificate
+#   3. Force-push to remove from history
+# 
+# For production:
+# - Use automated certificate management (e.g., certbot)
+# - Use certificate management services
+# - Never store private keys in version control

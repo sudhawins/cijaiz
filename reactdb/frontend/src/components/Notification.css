@@ -1,0 +1,112 @@
+.notification {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  animation: slideDown 0.3s ease-out;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.notification-success {
+  background: linear-gradient(135deg, #c6f6d5 0%, #a8e6c1 100%);
+  color: #22543d;
+  border-left: 5px solid #22863a;
+  box-shadow: 0 4px 12px rgba(34, 134, 58, 0.15);
+  animation: slideDown 0.3s ease-out, successPulse 0.5s ease-out;
+}
+
+.notification-error {
+  background: linear-gradient(135deg, #fed7d7 0%, #fc8181 100%);
+  color: #742a2a;
+  border-left: 5px solid #cb2431;
+  box-shadow: 0 4px 12px rgba(202, 36, 49, 0.15);
+}
+
+.notification-warning {
+  background: linear-gradient(135deg, #feebc8 0%, #fed293 100%);
+  color: #744210;
+  border-left: 5px solid #d69e2e;
+  box-shadow: 0 4px 12px rgba(214, 158, 46, 0.15);
+}
+
+.notification-info {
+  background: linear-gradient(135deg, #bee3f8 0%, #90cdf4 100%);
+  color: #2c5282;
+  border-left: 5px solid #2b6cb0;
+  box-shadow: 0 4px 12px rgba(43, 108, 176, 0.15);
+}
+
+.notification-icon {
+  font-size: 1.25rem;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.notification-message {
+  flex: 1;
+  word-break: break-word;
+}
+
+.notification-close {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: inherit;
+  padding: 0;
+  margin-left: 0.5rem;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notification-close:hover {
+  opacity: 1;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes successPulse {
+  0% {
+    box-shadow: 0 4px 12px rgba(34, 134, 58, 0.15);
+  }
+  50% {
+    box-shadow: 0 6px 20px rgba(34, 134, 58, 0.25);
+  }
+  100% {
+    box-shadow: 0 4px 12px rgba(34, 134, 58, 0.15);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .notification {
+    padding: 0.875rem 1rem;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .notification-icon {
+    font-size: 1rem;
+  }
+
+  .notification-close {
+    font-size: 1rem;
+  }
+}

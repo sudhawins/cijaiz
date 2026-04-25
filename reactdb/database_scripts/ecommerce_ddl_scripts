@@ -1,0 +1,111 @@
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'cart_items' AND schema_id = SCHEMA_ID('dbo'))
+BEGIN
+    CREATE TABLE [dbo].[cart_items](
+        [id] [int] IDENTITY(1,1) NOT NULL,
+        [cart_session_id] [nvarchar](255) NOT NULL,
+        [product_id] [int] NOT NULL,
+        [quantity] [int] NOT NULL,
+        [added_at] [datetime2](7) NULL,
+        PRIMARY KEY CLUSTERED ([id] ASC),
+        CONSTRAINT [uq_cart_items] UNIQUE NONCLUSTERED ([cart_session_id],[product_id])
+    );
+END
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'categories' AND schema_id = SCHEMA_ID('dbo'))
+BEGIN
+    CREATE TABLE [dbo].[categories](
+        [id] [int] IDENTITY(1,1) NOT NULL,
+        [name] [nvarchar](255) NOT NULL,
+        [description] [nvarchar](max) NULL,
+        [created_at] [datetime2](7) NULL,
+        [updated_at] [datetime2](7) NULL,
+        PRIMARY KEY CLUSTERED ([id] ASC),
+        UNIQUE NONCLUSTERED ([name] ASC)
+    );
+END
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'order_items' AND schema_id = SCHEMA_ID('dbo'))
+BEGIN
+    CREATE TABLE [dbo].[order_items](
+        [id] [int] IDENTITY(1,1) NOT NULL,
+        [order_id] [int] NOT NULL,
+        [product_id] [int] NOT NULL,
+        [product_name] [nvarchar](255) NOT NULL,
+        [quantity] [int] NOT NULL,
+        [unit_price] [decimal](10,2) NOT NULL,
+        PRIMARY KEY CLUSTERED ([id] ASC)
+    );
+END
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'orders' AND schema_id = SCHEMA_ID('dbo'))
+BEGIN
+    CREATE TABLE [dbo].[orders](
+        [id] [int] IDENTITY(1,1) NOT NULL,
+        [order_number] [nvarchar](100) NOT NULL,
+        [total_amount] [decimal](10,2) NOT NULL,
+        [status] [nvarchar](50) NULL,
+        [customer_email] [nvarchar](255) NOT NULL,
+        [customer_name] [nvarchar](255) NOT NULL,
+        [shipping_address] [nvarchar](max) NULL,
+        [created_at] [datetime2](7) NULL,
+        [updated_at] [datetime2](7) NULL,
+        PRIMARY KEY CLUSTERED ([id] ASC),
+        UNIQUE NONCLUSTERED ([order_number] ASC)
+    );
+END
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'product_images' AND schema_id = SCHEMA_ID('dbo'))
+BEGIN
+    CREATE TABLE [dbo].[product_images](
+        [id] [int] IDENTITY(1,1) NOT NULL,
+        [product_id] [int] NOT NULL,
+        [image_url] [nvarchar](max) NOT NULL,
+        [filename] [nvarchar](255) NOT NULL,
+        [thumbnail_url] [nvarchar](max) NULL,
+        [uploaded_at] [datetime2](7) NULL,
+        [is_primary] [bit] NULL,
+        [display_order] [int] NULL,
+        PRIMARY KEY CLUSTERED ([id] ASC)
+    );
+END
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'products' AND schema_id = SCHEMA_ID('dbo'))
+BEGIN
+    CREATE TABLE [dbo].[products](
+        [id] [int] IDENTITY(1,1) NOT NULL,
+        [name] [nvarchar](255) NOT NULL,
+        [description] [nvarchar](max) NULL,
+        [category_id] [int] NOT NULL,
+        [price] [decimal](10,2) NOT NULL,
+        [stock] [int] NULL,
+        [sku] [nvarchar](100) NULL,
+        [created_at] [datetime2](7) NULL,
+        [updated_at] [datetime2](7) NULL,
+        PRIMARY KEY CLUSTERED ([id] ASC),
+        UNIQUE NONCLUSTERED ([sku] ASC)
+    );
+END
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'search_history' AND schema_id = SCHEMA_ID('dbo'))
+BEGIN
+    CREATE TABLE [dbo].[search_history](
+        [id] [int] IDENTITY(1,1) NOT NULL,
+        [session_id] [nvarchar](255) NOT NULL,
+        [search_query] [nvarchar](max) NOT NULL,
+        [results_count] [int] NULL,
+        [searched_at] [datetime2](7) NULL,
+        PRIMARY KEY CLUSTERED ([id] ASC)
+    );
+END
+GO

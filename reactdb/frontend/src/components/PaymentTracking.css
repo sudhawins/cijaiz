@@ -1,0 +1,768 @@
+.payment-tracking-container {
+  width: 100%;
+  margin: 0;
+  padding: clamp(1rem, 5vw, 2rem);
+  background: #f8fafc;
+  min-height: 100vh;
+}
+
+.payment-tracking-container h1 {
+  color: #1e293b;
+  margin-bottom: clamp(1rem, 5vw, 2rem);
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  font-weight: 700;
+}
+
+/* Month/Year Selector */
+.month-selector-wrapper {
+  margin-bottom: 2rem;
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.month-selector {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-width: 250px;
+}
+
+.room-filter {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-width: 250px;
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+.room-filter > div {
+  flex: 1;
+}
+
+.clear-room-filter {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.clear-room-filter:hover {
+  background: #dc2626;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.clear-room-filter:active {
+  transform: translateY(0);
+}
+
+.month-selector label {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 0.95rem;
+}
+
+.dropdown-container {
+  position: relative;
+}
+
+.dropdown-input {
+  display: flex;
+  align-items: center;
+  border: 2px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 0 0.75rem;
+  background: white;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.dropdown-input:hover {
+  border-color: #cbd5e0;
+}
+
+.dropdown-input:focus-within {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.dropdown-input input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 0.75rem 0;
+  font-size: 1rem;
+  color: #1a202c;
+}
+
+.dropdown-input input::placeholder {
+  color: #a0aec0;
+}
+
+.dropdown-arrow {
+  color: #718096;
+  font-size: 0.75rem;
+  margin-left: 0.5rem;
+  padding: 0 0.25rem;
+  user-select: none;
+}
+
+.dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  margin-top: 0.25rem;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.dropdown-item {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  color: #2d3748;
+}
+
+.dropdown-item:hover {
+  background-color: #edf2f7;
+}
+
+.dropdown-item.selected {
+  background-color: #dbeafe;
+  color: #1e40af;
+  font-weight: 600;
+}
+
+.dropdown-empty {
+  padding: 1rem;
+  text-align: center;
+  color: #718096;
+}
+
+/* Summary Cards */
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.summary-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.summary-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.summary-label {
+  font-size: 0.875rem;
+  color: #718096;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.summary-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1a202c;
+}
+
+.summary-value.success {
+  color: #22863a;
+}
+
+.summary-value.pending {
+  color: #cb2431;
+}
+
+/* Status Summary */
+.status-summary {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 2px solid transparent;
+}
+
+.status-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.status-badge.paid {
+  background: #c6f6d5;
+  color: #22543d;
+}
+
+.status-badge.paid.active {
+  border-color: #22543d;
+  box-shadow: 0 0 0 4px rgba(34, 84, 61, 0.1);
+}
+
+.status-badge.partial {
+  background: #feebc8;
+  color: #7c2d12;
+}
+
+.status-badge.partial.active {
+  border-color: #7c2d12;
+  box-shadow: 0 0 0 4px rgba(124, 45, 18, 0.1);
+}
+
+.status-badge.pending {
+  background: #fed7d7;
+  color: #742a2a;
+}
+
+.status-badge.pending.active {
+  border-color: #742a2a;
+  box-shadow: 0 0 0 4px rgba(116, 42, 42, 0.1);
+}
+
+.status-label {
+  font-size: 0.95rem;
+}
+
+.status-count {
+  background: rgba(255, 255, 255, 0.6);
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+/* Loading State */
+.loading-state {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  background: white;
+  padding: 3rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  z-index: 10000;
+}
+
+.loading-spinner {
+  display: inline-block;
+  width: 56px;
+  height: 56px;
+  border: 4px solid rgba(66, 153, 225, 0.2);
+  border-top-color: #4299e1;
+  border-right-color: #667eea;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(66, 153, 225, 0.08);
+  animation: spin 0.9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-state p {
+  color: #718096;
+  font-size: 1.1rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Error State */
+.error-state {
+  padding: 1.5rem;
+  background: #fed7d7;
+  color: #742a2a;
+  border: 1px solid #fc8181;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.error-state p {
+  margin: 0;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  color: #718096;
+  font-size: 1.1rem;
+}
+
+.empty-state p {
+  margin-bottom: 1.5rem;
+}
+
+/* Button Styles */
+.btn {
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.95rem;
+}
+
+.btn-secondary {
+  background: #e2e8f0;
+  color: #2d3748;
+}
+
+.btn-secondary:hover {
+  background: #cbd5e0;
+  transform: translateY(-1px);
+}
+
+/* Payment Table */
+.payment-table-wrapper {
+  background: white;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  overflow-x: auto;
+  overflow-y: hidden;
+  border: 1px solid #e2e8f0;
+}
+
+.payment-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+  table-layout: fixed;
+  background: white;
+}
+
+.payment-table thead {
+  background: #1e293b;
+  border-bottom: 2px solid #334155;
+  display: table-header-group;
+}
+
+.payment-table th {
+  padding: 0.55rem 0.7rem;
+  text-align: left;
+  font-weight: 600;
+  color: #e2e8f0;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 0.6px;
+  word-wrap: break-word;
+  background: #1e293b;
+  border-right: 1px solid #334155;
+  white-space: nowrap;
+}
+
+.payment-table th:last-child {
+  border-right: none;
+}
+
+/* 8 columns: Name | Room | Rent Fixed | Total Receivable | Received | Charges | Balance | Date | Status */
+.payment-table th:nth-child(1) { width: 18%; }
+.payment-table th:nth-child(2) { width: 7%; text-align: center; }
+.payment-table th:nth-child(3) { width: 10%; text-align: right; }
+.payment-table th:nth-child(4) { width: 11%; text-align: right; }
+.payment-table th:nth-child(5) { width: 10%; text-align: right; }
+.payment-table th:nth-child(6) { width: 9%; text-align: right; }
+.payment-table th:nth-child(7) { width: 10%; text-align: right; }
+.payment-table th:nth-child(8) { width: 11%; text-align: left; }
+.payment-table th:nth-child(9) { width: 9%; text-align: center; }
+
+.payment-table tbody tr {
+  border-bottom: 1px solid #f1f5f9;
+  display: table-row;
+  transition: background-color 0.15s;
+}
+
+.payment-table tbody tr:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+.payment-table tbody tr:hover {
+  background-color: #eff6ff;
+}
+
+.payment-table tbody {
+  display: table-row-group;
+}
+
+.payment-table td {
+  padding: 0.45rem 0.7rem;
+  color: #334155;
+  word-wrap: break-word;
+  border-right: 1px solid #f1f5f9;
+}
+
+.payment-table td:last-child {
+  border-right: none;
+}
+
+.payment-table td:nth-child(1) { width: 18%; text-align: left; }
+.payment-table td:nth-child(2) { width: 7%; text-align: center; }
+.payment-table td:nth-child(3) { width: 10%; text-align: right; }
+.payment-table td:nth-child(4) { width: 11%; text-align: right; }
+.payment-table td:nth-child(5) { width: 10%; text-align: right; }
+.payment-table td:nth-child(6) { width: 9%; text-align: right; }
+.payment-table td:nth-child(7) { width: 10%; text-align: right; }
+.payment-table td:nth-child(8) { width: 11%; text-align: left; }
+.payment-table td:nth-child(9) { width: 9%; text-align: center; }
+
+.payment-table .tenant-name {
+  font-weight: 600;
+  cursor: help;
+  color: #1e293b;
+}
+
+.payment-table .amount {
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  font-family: 'SF Mono', 'Fira Mono', 'Courier New', monospace;
+}
+
+.payment-table .amount.success {
+  color: #16a34a;
+}
+
+.payment-table .amount.pending {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+.payment-table .amount.maroon {
+  color: #800000;
+  font-weight: 600;
+}
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  border-radius: 3px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-align: center;
+  min-width: 60px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.badge-paid {
+  background: #c6f6d5;
+  color: #22543d;
+}
+
+.badge-partial {
+  background: #feebc8;
+  color: #7c2d12;
+}
+
+.badge-pending {
+  background: #fed7d7;
+  color: #742a2a;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .summary-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .month-selector {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .dropdown-container {
+    width: 100%;
+  }
+
+  .payment-table {
+    font-size: 0.78rem;
+  }
+
+  .payment-table th,
+  .payment-table td {
+    padding: 0.45rem 0.55rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .payment-tracking-container {
+    padding: clamp(0.75rem, 3vw, 1rem);
+  }
+
+  .payment-tracking-container h1 {
+    font-size: clamp(1.2rem, 4vw, 1.5rem);
+    margin-bottom: 1rem;
+  }
+
+  .month-selector-wrapper {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .month-selector,
+  .room-filter {
+    flex: none;
+    width: 100%;
+    min-width: unset;
+  }
+
+  .room-filter {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .room-filter > div {
+    width: 100%;
+  }
+
+  .clear-room-filter {
+    width: 100%;
+  }
+
+  .summary-cards {
+    grid-template-columns: 1fr;
+    gap: clamp(1rem, 3vw, 1.5rem);
+  }
+
+  .status-summary {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .status-badge {
+    width: 100%;
+    justify-content: space-between;
+    padding: clamp(0.75rem, 2vw, 1rem) clamp(1rem, 3vw, 1.5rem);
+    font-size: 0.9rem;
+  }
+
+  /* Keep table layout on tablet */
+  .payment-table {
+    font-size: 0.75rem;
+    table-layout: fixed;
+  }
+
+  .payment-table th,
+  .payment-table td {
+    padding: 0.4rem 0.45rem;
+  }
+
+  .badge {
+    padding: 0.15rem 0.4rem;
+    font-size: 0.65rem;
+    min-width: 52px;
+  }
+
+  .dropdown-list {
+    max-height: 200px;
+  }
+
+  .dropdown-container {
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Convert table to card layout on small screen */
+  .payment-table-wrapper {
+    overflow: visible;
+  }
+
+  .payment-table {
+    display: block;
+    table-layout: auto;
+    width: 100%;
+  }
+
+  .payment-table thead {
+    display: none;
+  }
+
+  .payment-table tbody {
+    display: block;
+  }
+
+  .payment-table tbody tr {
+    display: block;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    background: white;
+  }
+
+  .payment-table tbody tr:hover {
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .payment-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    text-align: left;
+    border: none;
+  }
+
+  .payment-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #718096;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    margin-right: 0.75rem;
+    min-width: 100px;
+    flex-shrink: 0;
+  }
+
+  .payment-table td:nth-child(3)::before {
+    content: "Rent Fixed";
+  }
+
+  .payment-table td:nth-child(4)::before {
+    content: "Rent Received";
+  }
+
+  .payment-table td:nth-child(5)::before {
+    content: "Balance";
+  }
+
+  .payment-table td:nth-child(6)::before {
+    content: "Payment Date";
+  }
+
+  .payment-table td:nth-child(7)::before {
+    content: "Status";
+  }
+
+  .payment-table td:nth-child(1)::before {
+    content: "Tenant";
+  }
+
+  .payment-table td:nth-child(2)::before {
+    content: "Room";
+  }
+
+  .payment-table td:nth-child(3),
+  .payment-table td:nth-child(4),
+  .payment-table td:nth-child(5) {
+    text-align: right;
+  }
+
+  .badge {
+    min-width: auto;
+    padding: 0.25rem 0.4rem;
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .payment-tracking-container {
+    padding: 0.5rem;
+  }
+
+  .payment-tracking-container h1 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .summary-cards {
+    gap: 0.5rem;
+  }
+
+  .summary-label {
+    font-size: 0.7rem;
+  }
+
+  .summary-value {
+    font-size: 1rem;
+  }
+
+  .status-badge {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .payment-table tbody tr {
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  .payment-table td {
+    padding: 0.35rem 0;
+    font-size: 0.8rem;
+  }
+
+  .payment-table td::before {
+    font-size: 0.7rem;
+    min-width: 85px;
+    margin-right: 0.5rem;
+  }
+
+  .badge {
+    padding: 0.2rem 0.3rem;
+    font-size: 0.65rem;
+  }
+
+  .month-selector {
+    padding: 1rem 0.5rem;
+  }
+
+  .month-selector label {
+    font-size: 0.8rem;
+  }
+
+  .dropdown-container {
+    width: 100%;
+  }
+}

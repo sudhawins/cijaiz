@@ -1,0 +1,15 @@
+meta {
+  name: New HTTP Request
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:5002/api/auth/login
+  body: json
+  auth: none
+}
+
+body:json {
+  {"userName":"cijai","password":"password"}
+}

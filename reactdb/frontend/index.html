@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- SEO Meta Tags -->
+    <title>Gnanabi Mansion - Property & Tenant Management</title>
+    <meta name="description" content="Comprehensive property and tenant management application. Manage properties, tenants, payments, and daily status updates efficiently." />
+    <meta name="keywords" content="bachelors accomodation in madurai, affordable rates monthly stay, property management, tenant management, real estate, building management, occupancy tracking" />
+    <meta name="author" content="Gnanabi Mansion" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="English" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.mansion.gnanabi.info" />
+    
+    <!-- Open Graph Tags for Social Media -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Gnanabi Mansion - Property & Tenant Management" />
+    <meta property="og:description" content="Comprehensive property and tenant management application." />
+    <meta property="og:url" content="https://www.mansion.gnanabi.info" />
+    <meta property="og:image" content="https://www.mansion.gnanabi.info/og-image.jpg" />
+    <meta property="og:site_name" content="Gnanabi Mansion" />
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Gnanabi Mansion - Property & Tenant Management" />
+    <meta name="twitter:description" content="Comprehensive property and tenant management application." />
+    <meta name="twitter:image" content="https://www.mansion.gnanabi.info/twitter-image.jpg" />
+    
+    <!-- Additional SEO & Mobile Tags -->
+    <meta name="theme-color" content="#1976d2" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Gnanabi Mansion" />
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    
+    <!-- Google Maps API -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places,directions,geometry"></script>
+    
+    <!-- Google Maps Navigation Styles -->
+    <style>
+      body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+      }
+      #root {
+        width: 100%;
+        height: 100vh;
+      }
+      .map-container {
+        width: 100%;
+        height: 100%;
+      }
+      .search-box {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        z-index: 10;
+        background: white;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      }
+      .search-box input {
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        width: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- Map Navigation Container (optional if using React component) -->
+    <!-- <div id="map-navigation" class="map-container"></div> -->
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

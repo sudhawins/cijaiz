@@ -1,0 +1,791 @@
+/****** Object:  Database [mansion]    Script Date: 3/9/2026 2:26:55 PM ******/
+CREATE DATABASE [mansion]  (EDITION = 'Basic', SERVICE_OBJECTIVE = 'Basic', MAXSIZE = 2 GB) WITH CATALOG_COLLATION = SQL_Latin1_General_CP1_CI_AS, LEDGER = OFF;
+GO
+ALTER DATABASE [mansion] SET COMPATIBILITY_LEVEL = 150
+GO
+ALTER DATABASE [mansion] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [mansion] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [mansion] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [mansion] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [mansion] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [mansion] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [mansion] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [mansion] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [mansion] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [mansion] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [mansion] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [mansion] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [mansion] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [mansion] SET ALLOW_SNAPSHOT_ISOLATION ON 
+GO
+ALTER DATABASE [mansion] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [mansion] SET READ_COMMITTED_SNAPSHOT ON 
+GO
+ALTER DATABASE [mansion] SET  MULTI_USER 
+GO
+ALTER DATABASE [mansion] SET ENCRYPTION ON
+GO
+ALTER DATABASE [mansion] SET QUERY_STORE = ON
+GO
+ALTER DATABASE [mansion] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 7), DATA_FLUSH_INTERVAL_SECONDS = 900, INTERVAL_LENGTH_MINUTES = 60, MAX_STORAGE_SIZE_MB = 10, QUERY_CAPTURE_MODE = AUTO, SIZE_BASED_CLEANUP_MODE = AUTO, MAX_PLANS_PER_QUERY = 200, WAIT_STATS_CAPTURE_MODE = ON)
+GO
+/*** The scripts of database scoped configurations in Azure should be executed inside the target database connection. ***/
+GO
+-- ALTER DATABASE SCOPED CONFIGURATION SET MAXDOP = 8;
+GO
+/****** Object:  Table [dbo].[__MigrationHistory]    Script Date: 3/9/2026 2:26:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[__MigrationHistory](
+	[MigrationId] [nvarchar](150) NOT NULL,
+	[ContextKey] [nvarchar](300) NOT NULL,
+	[Model] [varbinary](max) NOT NULL,
+	[ProductVersion] [nvarchar](32) NOT NULL,
+ CONSTRAINT [PK_dbo.__MigrationHistory] PRIMARY KEY CLUSTERED 
+(
+	[MigrationId] ASC,
+	[ContextKey] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[CollectionReminder]    Script Date: 3/9/2026 2:26:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[CollectionReminder](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[OccupancyId] [int] NOT NULL,
+	[ReminderSentDate] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[CollectionVerification]    Script Date: 3/9/2026 2:26:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[CollectionVerification](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[OccupancyId] [int] NOT NULL,
+	[Comments] [nvarchar](200) NULL,
+	[VerifiedBy] [nvarchar](100) NOT NULL,
+	[VerifiedOn] [datetime] NOT NULL,
+	[IsVerified] [bit] NOT NULL,
+	[IsDisputeRaised] [bit] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Complains]    Script Date: 3/9/2026 2:26:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Complains](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Description] [nvarchar](1000) NOT NULL,
+	[ComplaintTypeId] [int] NOT NULL,
+	[ComplaintStatusId] [int] NOT NULL,
+	[ClosedDate] [datetime] NULL,
+	[ClosureComments] [nvarchar](500) NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[UpdatedDate] [datetime] NULL,
+	[RoomId] [int] NOT NULL,
+	[Charges] [money] NULL,
+	[ChargesDetails] [nvarchar](500) NULL,
+	[Proof1Url] [nvarchar](max) NULL,
+	[Proof2Url] [nvarchar](max) NULL,
+	[VideoUrl] [nvarchar](max) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ComplaintStatus]    Script Date: 3/9/2026 2:26:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ComplaintStatus](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Status] [nvarchar](20) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ComplainType]    Script Date: 3/9/2026 2:26:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ComplainType](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Type] [varchar](50) NOT NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[UpdatedDate] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ConsignmentImport]    Script Date: 3/9/2026 2:26:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ConsignmentImport](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ConsignmentMasterUrl] [varchar](max) NOT NULL,
+	[CreatedDate] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ConsignmentMasters]    Script Date: 3/9/2026 2:26:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ConsignmentMasters](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[AWB_No] [nvarchar](500) NOT NULL,
+	[CONSIGNOR] [nvarchar](500) NOT NULL,
+	[Booking_Date] [nvarchar](100) NOT NULL,
+	[Store_Coad] [nvarchar](100) NULL,
+	[Destination] [nvarchar](300) NULL,
+	[No_of_pcs] [smallint] NOT NULL,
+	[Weight] [decimal](18, 0) NULL,
+	[States] [nvarchar](500) NULL,
+	[Description] [nvarchar](1000) NULL,
+ CONSTRAINT [PK_ConsignmentMasters] PRIMARY KEY CLUSTERED 
+(
+	[AWB_No] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[DailyRoomStatus]    Script Date: 3/9/2026 2:26:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DailyRoomStatus](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Date] [datetime] NOT NULL,
+	[RoomStatus] [varchar](1000) NULL,
+	[WaterLevelStatus] [varchar](1000) NULL,
+	[CreatedDate] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[DailyRoomStatusMedia]    Script Date: 3/9/2026 2:26:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DailyRoomStatusMedia](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[DailyStatusId] [int] NOT NULL,
+	[MediaType] [varchar](50) NOT NULL,
+	[SequenceNumber] [int] NOT NULL,
+	[FileName] [varchar](500) NOT NULL,
+	[FilePath] [varchar](1000) NOT NULL,
+	[FileSize] [bigint] NULL,
+	[MimeType] [varchar](100) NULL,
+	[UploadedDate] [datetime] NOT NULL,
+	[CreatedBy] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[EBServicePayments]    Script Date: 3/9/2026 2:26:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[EBServicePayments](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ServiceId] [int] NOT NULL,
+	[BillAmount] [money] NOT NULL,
+	[BillDate] [datetime] NOT NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[UpdatedDate] [datetime] NULL,
+	[BilledUnits] [int] NULL,
+ CONSTRAINT [PK_Table] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Occupancy]    Script Date: 3/9/2026 2:26:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Occupancy](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[TenantId] [int] NOT NULL,
+	[RoomId] [int] NOT NULL,
+	[CheckInDate] [nchar](10) NOT NULL,
+	[CheckOutDate] [nchar](10) NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[UpdatedDate] [datetime] NOT NULL,
+	[RentFixed] [money] NULL,
+	[DepositReceived] [money] NULL,
+	[Charges] [money] NULL,
+	[DepositRefunded] [money] NULL,
+	[Depositurl] [nvarchar](max) NULL,
+	[Refundurl] [nvarchar](max) NULL,
+	[CollectionVerificationId] [int] NULL,
+	[TransactionId] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[RentalCollection]    Script Date: 3/9/2026 2:26:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[RentalCollection](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[OccupancyId] [int] NOT NULL,
+	[RentReceivedOn] [nchar](10) NOT NULL,
+	[RentBalance] [money] NULL,
+	[Charges] [money] NULL,
+	[RefundDetails] [text] NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[UpdatedDate] [datetime] NULL,
+	[RentReceived] [money] NULL,
+	[ModeofPayment] [nvarchar](10) NULL,
+	[screenshoturl] [nvarchar](max) NULL,
+	[folder] [nvarchar](50) NULL,
+	[CollectionVerificationId] [int] NULL,
+	[TransactionId] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[RoleDetail]    Script Date: 3/9/2026 2:26:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[RoleDetail](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[RoleName] [nvarchar](50) NOT NULL,
+	[RoleType] [nvarchar](50) NOT NULL,
+	[createdDate] [date] NULL,
+	[updatedDate] [date] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[RoomDetail]    Script Date: 3/9/2026 2:26:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[RoomDetail](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Number] [nchar](10) NOT NULL,
+	[Rent] [int] NOT NULL,
+	[Beds] [smallint] NOT NULL,
+	[RoomNo] [nchar](10) NULL,
+	[ParentRoomId] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ServiceConsumptionDetails]    Script Date: 3/9/2026 2:26:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ServiceConsumptionDetails](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ServiceAllocId] [int] NOT NULL,
+	[ReadingTakenDate] [datetime] NOT NULL,
+	[StartingMeterReading] [int] NOT NULL,
+	[EndingMeterReading] [nchar](10) NOT NULL,
+	[UnitsConsumed] [int] NOT NULL,
+	[AmountToBeCollected] [money] NULL,
+	[UnitRate] [money] NOT NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[UpdatedDate] [datetime] NULL,
+	[MeterPhoto1Url] [nvarchar](max) NULL,
+	[MeterPhoto2Url] [nvarchar](max) NULL,
+	[MeterPhoto3Url] [nvarchar](max) NULL,
+	[IsAutoFilledStartingReading] [bit] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ServiceDetails]    Script Date: 3/9/2026 2:26:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ServiceDetails](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ConsumerNo] [nvarchar](50) NOT NULL,
+	[MeterNo] [int] NOT NULL,
+	[Load] [nvarchar](10) NOT NULL,
+	[ServiceCategory] [nvarchar](50) NOT NULL,
+	[ConsumerName] [nvarchar](100) NOT NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[UpdatedDate] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ServiceRoomAllocation]    Script Date: 3/9/2026 2:26:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ServiceRoomAllocation](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ServiceId] [int] NOT NULL,
+	[RoomId] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[StockDetails]    Script Date: 3/9/2026 2:26:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[StockDetails](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](50) NOT NULL,
+	[Description] [nvarchar](500) NULL,
+	[Quantity] [smallint] NOT NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[CreatedBy] [varchar](50) NOT NULL,
+	[UpdatedDate] [datetime] NULL,
+	[UpdatedBy] [varchar](50) NULL,
+	[ImageURL] [nvarchar](max) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Table]    Script Date: 3/9/2026 2:26:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Table](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ConsignmentMasterUrl] [varchar](max) NOT NULL,
+	[CreatedDate] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Tables]    Script Date: 3/9/2026 2:26:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Tables](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[AWBId] [nvarchar](500) NOT NULL,
+	[ShipmentLocation] [nvarchar](500) NOT NULL,
+	[DateTime] [datetime] NOT NULL,
+	[PhotoUrl] [varchar](max) NULL,
+ CONSTRAINT [PK_Tables] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Tenant]    Script Date: 3/9/2026 2:26:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Tenant](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nchar](100) NOT NULL,
+	[Phone] [nchar](15) NOT NULL,
+	[Address] [nchar](100) NOT NULL,
+	[City] [nchar](50) NOT NULL,
+	[PhotoUrl] [nvarchar](max) NULL,
+	[Proof1Url] [nvarchar](max) NULL,
+	[Proof2Url] [nvarchar](max) NULL,
+	[Proof3Url] [nvarchar](max) NULL,
+	[Photo2Url] [nvarchar](max) NULL,
+	[Photo3Url] [nvarchar](max) NULL,
+	[Photo4Url] [nvarchar](max) NULL,
+	[Photo5Url] [nvarchar](max) NULL,
+	[Photo6Url] [nvarchar](max) NULL,
+	[Photo7Url] [nvarchar](max) NULL,
+	[Photo8Url] [nvarchar](max) NULL,
+	[Photo9Url] [nvarchar](max) NULL,
+	[Photo10Url] [nvarchar](max) NULL,
+	[Proof4Url] [nvarchar](max) NULL,
+	[Proof5Url] [nvarchar](max) NULL,
+	[Proof6Url] [nvarchar](max) NULL,
+	[Proof7Url] [nvarchar](max) NULL,
+	[Proof8Url] [nvarchar](max) NULL,
+	[Proof9Url] [nvarchar](max) NULL,
+	[Proof10Url] [nvarchar](max) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Tenants]    Script Date: 3/9/2026 2:26:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Tenants](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](max) NULL,
+ CONSTRAINT [PK_dbo.Tenants] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Transactions]    Script Date: 3/9/2026 2:26:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Transactions](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Description] [nvarchar](500) NOT NULL,
+	[TransactionTypeId] [int] NOT NULL,
+	[TransactionDate] [datetime] NOT NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[UpdatedDate] [datetime] NULL,
+	[Amount] [money] NOT NULL,
+	[OccupancyId] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[TransactionType]    Script Date: 3/9/2026 2:26:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TransactionType](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[TransactionType] [nvarchar](10) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[User]    Script Date: 3/9/2026 2:26:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[User](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[UserName] [nvarchar](100) NOT NULL,
+	[Password] [nvarchar](500) NOT NULL,
+	[Name] [nvarchar](500) NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[UpdatedDate] [datetime] NULL,
+	[NextLoginDuration] [tinyint] NULL,
+	[LastLogin] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[UserRole]    Script Date: 3/9/2026 2:26:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[UserRole](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[UserId] [int] NOT NULL,
+	[RoleId] [int] NOT NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[UpdatedDate] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Index [IX_DailyRoomStatusMedia_DailyStatusId]    Script Date: 3/9/2026 2:26:55 PM ******/
+CREATE NONCLUSTERED INDEX [IX_DailyRoomStatusMedia_DailyStatusId] ON [dbo].[DailyRoomStatusMedia]
+(
+	[DailyStatusId] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, DROP_EXISTING = OFF, ONLINE = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [IX_DailyRoomStatusMedia_MediaType]    Script Date: 3/9/2026 2:26:55 PM ******/
+CREATE NONCLUSTERED INDEX [IX_DailyRoomStatusMedia_MediaType] ON [dbo].[DailyRoomStatusMedia]
+(
+	[MediaType] ASC,
+	[SequenceNumber] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, DROP_EXISTING = OFF, ONLINE = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+/****** Object:  Index [IX_ServiceConsumptionDetails_DateAndAlloc]    Script Date: 3/9/2026 2:26:55 PM ******/
+CREATE NONCLUSTERED INDEX [IX_ServiceConsumptionDetails_DateAndAlloc] ON [dbo].[ServiceConsumptionDetails]
+(
+	[ReadingTakenDate] DESC,
+	[ServiceAllocId] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, DROP_EXISTING = OFF, ONLINE = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+/****** Object:  Index [IX_ServiceConsumptionDetails_ServiceAllocId]    Script Date: 3/9/2026 2:26:55 PM ******/
+CREATE NONCLUSTERED INDEX [IX_ServiceConsumptionDetails_ServiceAllocId] ON [dbo].[ServiceConsumptionDetails]
+(
+	[ServiceAllocId] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, DROP_EXISTING = OFF, ONLINE = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [IX_FK_Table_ToTable]    Script Date: 3/9/2026 2:26:55 PM ******/
+CREATE NONCLUSTERED INDEX [IX_FK_Table_ToTable] ON [dbo].[Tables]
+(
+	[AWBId] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, DROP_EXISTING = OFF, ONLINE = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[DailyRoomStatusMedia] ADD  DEFAULT (getdate()) FOR [UploadedDate]
+GO
+ALTER TABLE [dbo].[RoomDetail] ADD  DEFAULT ((1)) FOR [Beds]
+GO
+ALTER TABLE [dbo].[ServiceConsumptionDetails] ADD  DEFAULT ((0)) FOR [AmountToBeCollected]
+GO
+ALTER TABLE [dbo].[ServiceConsumptionDetails] ADD  DEFAULT ((10)) FOR [UnitRate]
+GO
+ALTER TABLE [dbo].[ServiceConsumptionDetails] ADD  DEFAULT ((0)) FOR [IsAutoFilledStartingReading]
+GO
+ALTER TABLE [dbo].[CollectionReminder]  WITH CHECK ADD  CONSTRAINT [FK_CollectionReminder_Occupancy] FOREIGN KEY([OccupancyId])
+REFERENCES [dbo].[Occupancy] ([Id])
+GO
+ALTER TABLE [dbo].[CollectionReminder] CHECK CONSTRAINT [FK_CollectionReminder_Occupancy]
+GO
+ALTER TABLE [dbo].[Complains]  WITH CHECK ADD  CONSTRAINT [FK_Complains_ToRoomDetail] FOREIGN KEY([RoomId])
+REFERENCES [dbo].[RoomDetail] ([Id])
+GO
+ALTER TABLE [dbo].[Complains] CHECK CONSTRAINT [FK_Complains_ToRoomDetail]
+GO
+ALTER TABLE [dbo].[Complains]  WITH CHECK ADD  CONSTRAINT [FK_Complains_ToStatus] FOREIGN KEY([ComplaintStatusId])
+REFERENCES [dbo].[ComplaintStatus] ([Id])
+GO
+ALTER TABLE [dbo].[Complains] CHECK CONSTRAINT [FK_Complains_ToStatus]
+GO
+ALTER TABLE [dbo].[Complains]  WITH CHECK ADD  CONSTRAINT [FK_Complains_ToTable] FOREIGN KEY([ComplaintTypeId])
+REFERENCES [dbo].[ComplainType] ([Id])
+GO
+ALTER TABLE [dbo].[Complains] CHECK CONSTRAINT [FK_Complains_ToTable]
+GO
+ALTER TABLE [dbo].[DailyRoomStatusMedia]  WITH CHECK ADD  CONSTRAINT [FK_DailyRoomStatusMedia_DailyRoomStatus] FOREIGN KEY([DailyStatusId])
+REFERENCES [dbo].[DailyRoomStatus] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[DailyRoomStatusMedia] CHECK CONSTRAINT [FK_DailyRoomStatusMedia_DailyRoomStatus]
+GO
+ALTER TABLE [dbo].[EBServicePayments]  WITH CHECK ADD  CONSTRAINT [FK_EBServicePayments_Service] FOREIGN KEY([ServiceId])
+REFERENCES [dbo].[ServiceDetails] ([Id])
+GO
+ALTER TABLE [dbo].[EBServicePayments] CHECK CONSTRAINT [FK_EBServicePayments_Service]
+GO
+ALTER TABLE [dbo].[Occupancy]  WITH CHECK ADD  CONSTRAINT [FK_Occupancy_CollectionVerification] FOREIGN KEY([CollectionVerificationId])
+REFERENCES [dbo].[CollectionVerification] ([Id])
+GO
+ALTER TABLE [dbo].[Occupancy] CHECK CONSTRAINT [FK_Occupancy_CollectionVerification]
+GO
+ALTER TABLE [dbo].[Occupancy]  WITH CHECK ADD  CONSTRAINT [FK_Occupancy_RoomDetail] FOREIGN KEY([RoomId])
+REFERENCES [dbo].[RoomDetail] ([Id])
+GO
+ALTER TABLE [dbo].[Occupancy] CHECK CONSTRAINT [FK_Occupancy_RoomDetail]
+GO
+ALTER TABLE [dbo].[Occupancy]  WITH CHECK ADD  CONSTRAINT [FK_Occupancy_Tenant] FOREIGN KEY([TenantId])
+REFERENCES [dbo].[Tenant] ([Id])
+GO
+ALTER TABLE [dbo].[Occupancy] CHECK CONSTRAINT [FK_Occupancy_Tenant]
+GO
+ALTER TABLE [dbo].[Occupancy]  WITH CHECK ADD  CONSTRAINT [FK_Occupancy_Transactions] FOREIGN KEY([TransactionId])
+REFERENCES [dbo].[Transactions] ([Id])
+GO
+ALTER TABLE [dbo].[Occupancy] CHECK CONSTRAINT [FK_Occupancy_Transactions]
+GO
+ALTER TABLE [dbo].[RentalCollection]  WITH CHECK ADD  CONSTRAINT [FK_RentalCollection_CollectionVerification] FOREIGN KEY([CollectionVerificationId])
+REFERENCES [dbo].[CollectionVerification] ([Id])
+GO
+ALTER TABLE [dbo].[RentalCollection] CHECK CONSTRAINT [FK_RentalCollection_CollectionVerification]
+GO
+ALTER TABLE [dbo].[RentalCollection]  WITH CHECK ADD  CONSTRAINT [FK_RentalCollection_ToOccupancy] FOREIGN KEY([OccupancyId])
+REFERENCES [dbo].[Occupancy] ([Id])
+GO
+ALTER TABLE [dbo].[RentalCollection] CHECK CONSTRAINT [FK_RentalCollection_ToOccupancy]
+GO
+ALTER TABLE [dbo].[RentalCollection]  WITH CHECK ADD  CONSTRAINT [FK_RentalCollection_Transactions] FOREIGN KEY([TransactionId])
+REFERENCES [dbo].[Transactions] ([Id])
+GO
+ALTER TABLE [dbo].[RentalCollection] CHECK CONSTRAINT [FK_RentalCollection_Transactions]
+GO
+ALTER TABLE [dbo].[ServiceConsumptionDetails]  WITH CHECK ADD  CONSTRAINT [FK_ServiceConsumptionDetails_ToTable] FOREIGN KEY([ServiceAllocId])
+REFERENCES [dbo].[ServiceRoomAllocation] ([Id])
+GO
+ALTER TABLE [dbo].[ServiceConsumptionDetails] CHECK CONSTRAINT [FK_ServiceConsumptionDetails_ToTable]
+GO
+ALTER TABLE [dbo].[ServiceRoomAllocation]  WITH CHECK ADD  CONSTRAINT [FK_ServiceRoomAllocation_RoomDetail] FOREIGN KEY([RoomId])
+REFERENCES [dbo].[RoomDetail] ([Id])
+GO
+ALTER TABLE [dbo].[ServiceRoomAllocation] CHECK CONSTRAINT [FK_ServiceRoomAllocation_RoomDetail]
+GO
+ALTER TABLE [dbo].[ServiceRoomAllocation]  WITH CHECK ADD  CONSTRAINT [FK_ServiceRoomAllocation_ServiceDetails] FOREIGN KEY([ServiceId])
+REFERENCES [dbo].[ServiceDetails] ([Id])
+GO
+ALTER TABLE [dbo].[ServiceRoomAllocation] CHECK CONSTRAINT [FK_ServiceRoomAllocation_ServiceDetails]
+GO
+ALTER TABLE [dbo].[Tables]  WITH CHECK ADD  CONSTRAINT [FK_Table_ToTable] FOREIGN KEY([AWBId])
+REFERENCES [dbo].[ConsignmentMasters] ([AWB_No])
+GO
+ALTER TABLE [dbo].[Tables] CHECK CONSTRAINT [FK_Table_ToTable]
+GO
+ALTER TABLE [dbo].[Transactions]  WITH CHECK ADD  CONSTRAINT [FK_Transactions_Occupancy] FOREIGN KEY([OccupancyId])
+REFERENCES [dbo].[Occupancy] ([Id])
+GO
+ALTER TABLE [dbo].[Transactions] CHECK CONSTRAINT [FK_Transactions_Occupancy]
+GO
+ALTER TABLE [dbo].[Transactions]  WITH CHECK ADD  CONSTRAINT [FK_Transactions_ToTable] FOREIGN KEY([TransactionTypeId])
+REFERENCES [dbo].[TransactionType] ([Id])
+GO
+ALTER TABLE [dbo].[Transactions] CHECK CONSTRAINT [FK_Transactions_ToTable]
+GO
+ALTER TABLE [dbo].[UserRole]  WITH CHECK ADD  CONSTRAINT [FK_UserRole_ToRoleDetail] FOREIGN KEY([RoleId])
+REFERENCES [dbo].[RoleDetail] ([Id])
+GO
+ALTER TABLE [dbo].[UserRole] CHECK CONSTRAINT [FK_UserRole_ToRoleDetail]
+GO
+ALTER TABLE [dbo].[UserRole]  WITH CHECK ADD  CONSTRAINT [FK_UserRole_ToUser] FOREIGN KEY([UserId])
+REFERENCES [dbo].[User] ([Id])
+GO
+ALTER TABLE [dbo].[UserRole] CHECK CONSTRAINT [FK_UserRole_ToUser]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_GetPreviousMonthEndingReading]    Script Date: 3/9/2026 2:26:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- Stored Procedure to get previous month's ending meter reading for a service allocation
+CREATE   PROCEDURE [dbo].[sp_GetPreviousMonthEndingReading]
+    @ServiceAllocId INT,
+    @CurrentMonth INT,
+    @CurrentYear INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Calculate previous month
+    DECLARE @PreviousMonth INT = CASE WHEN @CurrentMonth = 1 THEN 12 ELSE @CurrentMonth - 1 END;
+    DECLARE @PreviousYear INT = CASE WHEN @CurrentMonth = 1 THEN @CurrentYear - 1 ELSE @CurrentYear END;
+
+    -- Get the last reading of the previous month
+    SELECT TOP 1 
+        [EndingMeterReading],
+        [ReadingTakenDate]
+    FROM [dbo].[ServiceConsumptionDetails]
+    WHERE [ServiceAllocId] = @ServiceAllocId
+        AND YEAR([ReadingTakenDate]) = @PreviousYear
+        AND MONTH([ReadingTakenDate]) = @PreviousMonth
+    ORDER BY [ReadingTakenDate] DESC;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_GetServiceAllocationsForReading]    Script Date: 3/9/2026 2:26:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- Stored Procedure to get service allocations with search capability
+CREATE   PROCEDURE [dbo].[sp_GetServiceAllocationsForReading]
+    @SearchTerm NVARCHAR(100) = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        sra.[Id],
+        sra.[ServiceId],
+        sra.[RoomId],
+        sd.[ConsumerNo],
+        sd.[ConsumerName],
+        sd.[MeterNo],
+        rd.[Number] as [RoomNumber],
+        CONCAT(rd.[Number], ' - ', sd.[ConsumerName], ' (', sd.[ConsumerNo], ')') as [DisplayName]
+    FROM [dbo].[ServiceRoomAllocation] sra
+    INNER JOIN [dbo].[ServiceDetails] sd ON sra.[ServiceId] = sd.[Id]
+    INNER JOIN [dbo].[RoomDetail] rd ON sra.[RoomId] = rd.[Id]
+    WHERE (@SearchTerm IS NULL 
+        OR rd.[Number] LIKE '%' + @SearchTerm + '%'
+        OR sd.[ConsumerName] LIKE '%' + @SearchTerm + '%'
+        OR sd.[ConsumerNo] LIKE '%' + @SearchTerm + '%')
+    ORDER BY rd.[Number] ASC, sd.[ConsumerName] ASC;
+END
+GO
+ALTER DATABASE [mansion] SET  READ_WRITE 
+GO

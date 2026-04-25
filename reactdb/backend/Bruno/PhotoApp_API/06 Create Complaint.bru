@@ -1,0 +1,27 @@
+meta {
+  name: Create Complaint
+  type: http
+  seq: 6
+}
+
+post {
+  url: http://localhost:5000/api/complaints
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "occupancyId": 1,
+    "complaintType": "Electrical",
+    "description": "Switch not working",
+    "status": "Open",
+    "proof1Url": "proof1-file-name.jpg",
+    "proof2Url": "proof2-file-name.jpg",
+    "videoUrl": "video-file-name.mp4"
+  }
+}

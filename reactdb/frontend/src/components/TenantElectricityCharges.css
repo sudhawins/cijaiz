@@ -1,0 +1,714 @@
+/* =====================================================
+   Tenant Electricity Charges - Professional Styling
+   ===================================================== */
+
+.electricity-charges-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: clamp(12px, 3vw, 24px);
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+}
+
+/* Header Section */
+/* Removed - charges-header */
+
+/* Filter Section */
+.charges-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(12px, 2vw, 16px);
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  margin-bottom: 24px;
+  align-items: flex-end;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 200px;
+}
+
+.filter-group label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #34495e;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.filter-group input,
+.filter-group select {
+  padding: 10px 12px;
+  border: 2px solid #ecf0f1;
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  background: white;
+  color: #2c3e50;
+}
+
+.filter-group input:focus,
+.filter-group select:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.filter-group button {
+  padding: 10px 24px;
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.filter-group button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(52, 152, 219, 0.4);
+}
+
+.filter-group button:active {
+  transform: translateY(0);
+}
+
+/* Tab Navigation */
+.tab-navigation {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  padding: 0;
+  background: white;
+  border-radius: 12px;
+  padding: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.tab-button {
+  padding: 12px 24px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #7f8c8d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+}
+
+.tab-button:hover {
+  background: #f0f0f0;
+  color: #2c3e50;
+}
+
+.tab-button.active {
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
+}
+
+.tab-button.active::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  border-radius: 2px;
+  opacity: 0;
+}
+
+/* Content Sections */
+.charges-content {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Table Styling */
+.charges-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  animation: fadeIn 0.3s ease;
+}
+
+.charges-table thead {
+  background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+  color: white;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.charges-table thead th {
+  padding: 16px;
+  text-align: left;
+  border: none;
+  background: inherit;
+}
+
+.charges-table tbody tr {
+  border-bottom: 1px solid #ecf0f1;
+  transition: all 0.3s ease;
+}
+
+.charges-table tbody tr:hover {
+  background: #f8f9fa;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.03);
+}
+
+.charges-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.charges-table tbody td {
+  padding: 16px;
+  font-size: 13px;
+  color: #2c3e50;
+}
+
+.charges-table tbody td strong {
+  font-weight: 600;
+  color: #34495e;
+}
+
+/* Status Badge */
+.status-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-badge.calculated {
+  background: #d5f4e6;
+  color: #27ae60;
+}
+
+.status-badge.pending {
+  background: #fdeaa8;
+  color: #d68910;
+}
+
+.status-badge.error {
+  background: #fadbd8;
+  color: #c0392b;
+}
+
+/* Summary Cards */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(12px, 3vw, 24px);
+  margin-bottom: 32px;
+}
+
+.summary-card {
+  background: white;
+  border-radius: 12px;
+  padding: clamp(16px, 3vw, 24px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border-left: 5px solid #3498db;
+  transition: all 0.3s ease;
+}
+
+.summary-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.summary-card.revenue {
+  border-left-color: #27ae60;
+}
+
+.summary-card.tenants {
+  border-left-color: #3498db;
+}
+
+.summary-card.average {
+  border-left-color: #e74c3c;
+}
+
+.summary-card.total {
+  border-left-color: #9b59b6;
+}
+
+.card-label {
+  font-size: 12px;
+  color: #7f8c8d;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.card-value {
+  font-size: clamp(20px, 5vw, 32px);
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.card-subtitle {
+  font-size: 12px;
+  color: #95a5a6;
+  margin-top: 6px;
+}
+
+/* Room Summary Section */
+.room-summary-container {
+  background: white;
+  border-radius: 12px;
+  padding: clamp(20px, 4vw, 32px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.room-summary-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0 0 24px 0;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #ecf0f1;
+}
+
+.room-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: clamp(12px, 2vw, 20px);
+}
+
+.room-card {
+  background: linear-gradient(135deg, #f8f9fa 0%, #f0f1f2 100%);
+  border-radius: 10px;
+  padding: 20px;
+  border: 2px solid #ecf0f1;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.room-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #3498db, #2980b9);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.room-card:hover {
+  border-color: #3498db;
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.15);
+}
+
+.room-card:hover::before {
+  opacity: 1;
+}
+
+.room-number {
+  font-size: 16px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 12px;
+}
+
+.room-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  color: #7f8c8d;
+}
+
+.detail-row strong {
+  color: #34495e;
+  font-weight: 600;
+}
+
+.occupied-room-cell {
+  color: #1f7a3f;
+  background-color: rgba(39, 174, 96, 0.12);
+  border-radius: 6px;
+  padding: 4px 8px;
+}
+
+.occupied-person-icon {
+  margin-left: 4px;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+.checkout-month-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  color: #9a3412;
+  background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+  border: 1px solid #fdba74;
+  box-shadow: 0 1px 2px rgba(154, 52, 18, 0.12);
+  vertical-align: middle;
+}
+
+.checkout-month-icon-svg {
+  width: 13px;
+  height: 13px;
+}
+
+.guest-tenant-indicator {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 8px;
+  padding: 2px;
+  border-radius: 50%;
+  border: 1px solid #fca5a5;
+  background: #fef2f2;
+  color: #dc2626;
+  vertical-align: middle;
+}
+
+.guest-tenant-icon-svg {
+  width: 12px;
+  height: 12px;
+}
+
+.mobile-tooltip-wrapper {
+  display: none;
+  position: relative;
+  margin-left: 6px;
+}
+
+.mobile-tooltip-trigger {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid #3498db;
+  background: #ffffff;
+  color: #3498db;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0;
+  cursor: pointer;
+}
+
+.mobile-tooltip-bubble {
+  position: absolute;
+  top: 24px;
+  left: 0;
+  z-index: 100;
+  min-width: 220px;
+  max-width: min(320px, 70vw);
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: #2c3e50;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: pre-line;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+  .mobile-tooltip-wrapper {
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+/* Tenant Charges Section */
+.tenant-charges-container {
+  background: white;
+  border-radius: 12px;
+  padding: clamp(20px, 4vw, 32px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.tenant-charges-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0 0 24px 0;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #ecf0f1;
+}
+
+.tenant-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: clamp(16px, 2vw, 24px);
+}
+
+.tenant-card {
+  background: white;
+  border: 2px solid #ecf0f1;
+  border-radius: 12px;
+  padding: 20px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tenant-card:hover {
+  border-color: #3498db;
+  box-shadow: 0 6px 16px rgba(52, 152, 219, 0.15);
+  transform: translateY(-4px);
+}
+
+.tenant-card-header {
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #ecf0f1;
+}
+
+.tenant-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 6px;
+}
+
+.tenant-room {
+  font-size: 12px;
+  color: #7f8c8d;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tenant-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.charge-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 13px;
+  color: #7f8c8d;
+}
+
+.charge-row.total {
+  padding: 12px 0;
+  border-top: 2px solid #ecf0f1;
+  border-bottom: 2px solid #ecf0f1;
+  font-weight: 700;
+  color: #2c3e50;
+  background: #f8f9fa;
+  padding: 12px 8px;
+  margin: 8px -8px;
+}
+
+.charge-value {
+  font-weight: 600;
+  color: #27ae60;
+}
+
+/* Messages */
+.message {
+  padding: 14px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  animation: slideInRight 0.3s ease;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.message.success {
+  background: #d5f4e6;
+  color: #27ae60;
+  border-left: 4px solid #27ae60;
+}
+
+.message.error {
+  background: #fadbd8;
+  color: #c0392b;
+  border-left: 4px solid #c0392b;
+}
+
+/* Loading State */
+.loading {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.loading-spinner {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  border: 4px solid #ecf0f1;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-text {
+  color: #7f8c8d;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* No Data State */
+.no-data {
+  text-align: center;
+  padding: 60px 20px;
+  color: #7f8c8d;
+}
+
+.no-data-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.no-data-text {
+  font-size: 14px;
+  margin: 0;
+  color: #7f8c8d;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  gap: 4px;
+  margin-top: 24px;
+  justify-content: center;
+  padding-top: 20px;
+  border-top: 1px solid #ecf0f1;
+}
+
+.pagination button {
+  padding: 8px 12px;
+  background: white;
+  border: 2px solid #ecf0f1;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  color: #34495e;
+}
+
+.pagination button:hover {
+  border-color: #3498db;
+  color: #3498db;
+  background: #f8f9fa;
+}
+
+.pagination button.active {
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  border-color: #3498db;
+  color: white;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .charges-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-group {
+    width: 100%;
+  }
+
+  .charges-table {
+    font-size: 12px;
+  }
+
+  .charges-table thead th,
+  .charges-table tbody td {
+    padding: 12px 8px;
+  }
+
+  .room-grid,
+  .tenant-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tab-navigation {
+    flex-direction: column;
+  }
+
+  .tab-button {
+    width: 100%;
+    text-align: left;
+  }
+}

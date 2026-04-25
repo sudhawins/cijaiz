@@ -1,0 +1,740 @@
+{
+  "info": {
+    "name": "PhotoApp Backend API",
+    "description": "Postman collection generated from the documented backend API routes.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000/api"
+    },
+    {
+      "key": "accessToken",
+      "value": ""
+    },
+    {
+      "key": "refreshToken",
+      "value": ""
+    },
+    {
+      "key": "tenantId",
+      "value": "1"
+    },
+    {
+      "key": "occupancyId",
+      "value": "1"
+    },
+    {
+      "key": "complaintId",
+      "value": "1"
+    },
+    {
+      "key": "dailyStatusId",
+      "value": "1"
+    },
+    {
+      "key": "guestCheckinId",
+      "value": "1"
+    },
+    {
+      "key": "serviceId",
+      "value": "1"
+    },
+    {
+      "key": "serviceAllocId",
+      "value": "1"
+    },
+    {
+      "key": "billingYear",
+      "value": "2026"
+    },
+    {
+      "key": "billingMonth",
+      "value": "4"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/refresh",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "refresh"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "System",
+      "item": [
+        {
+          "name": "Health",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "health"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Database Status",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/database/status",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "database",
+                "status"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Rooms And Occupancy",
+      "item": [
+        {
+          "name": "Rooms",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/rooms",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "rooms"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Rooms Occupancy",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/rooms/occupancy",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "rooms",
+                "occupancy"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Vacant Rooms",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/rooms/vacant",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "rooms",
+                "vacant"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Occupancy Links Admin",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/occupancy/links",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "occupancy",
+                "links"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Check In",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tenantId\": {{tenantId}},\n  \"roomId\": 1,\n  \"checkInDate\": \"2026-04-11\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/occupancy/checkin",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "occupancy",
+                "checkin"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tenants",
+      "item": [
+        {
+          "name": "Tenants With Occupancy",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/tenants/with-occupancy",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tenants",
+                "with-occupancy"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Tenant",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/tenants/{{tenantId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenantId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Tenant",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"phone\": \"9876543210\",\n  \"address\": \"12 Main Street\",\n  \"city\": \"Chennai\",\n  \"roomId\": 1,\n  \"checkInDate\": \"2026-04-11\",\n  \"photoUrl\": \"tenant-photo.jpg\",\n  \"proof1Url\": \"tenant-proof.jpg\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tenants",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tenants"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Rental",
+      "item": [
+        {
+          "name": "Rental Summary",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/rental/summary",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "rental",
+                "summary"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Unpaid Tenants",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/rental/unpaid-tenants",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "rental",
+                "unpaid-tenants"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Monthly Billing Report",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/monthly-billing-report/{{billingYear}}/{{billingMonth}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "monthly-billing-report",
+                "{{billingYear}}",
+                "{{billingMonth}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Complaints",
+      "item": [
+        {
+          "name": "List Complaints",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/complaints",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "complaints"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Complaint Types",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/complaints/types",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "complaints",
+                "types"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Complaint",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"occupancyId\": {{occupancyId}},\n  \"complaintType\": \"Electrical\",\n  \"description\": \"Switch not working\",\n  \"status\": \"Open\",\n  \"proof1Url\": \"proof1-file-name.jpg\",\n  \"proof2Url\": \"proof2-file-name.jpg\",\n  \"videoUrl\": \"video-file-name.mp4\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/complaints",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "complaints"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Daily Status",
+      "item": [
+        {
+          "name": "List Daily Status",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/daily-status",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "daily-status"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Daily Status",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"occupancyId\": {{occupancyId}},\n  \"statusDate\": \"2026-04-11\",\n  \"notes\": \"Routine daily entry\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/daily-status",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "daily-status"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Guest Checkins",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/daily-status/{{dailyStatusId}}/guest-checkins",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "daily-status",
+                "{{dailyStatusId}}",
+                "guest-checkins"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Services And Billing",
+      "item": [
+        {
+          "name": "Services Details Admin",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/services/details",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "services",
+                "details"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Service Allocations Admin",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/service-allocations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "service-allocations"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Service Consumption",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/service-consumption",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "service-consumption"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Tenant Service Charges",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/tenant-service-charges/{{billingYear}}/{{billingMonth}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tenant-service-charges",
+                "{{billingYear}}",
+                "{{billingMonth}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Users Admin",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Roles Admin",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/roles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "roles"
+              ]
+            }
+          }
+        },
+        {
+          "name": "User Roles",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/user-roles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user-roles"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Transactions And Stock",
+      "item": [
+        {
+          "name": "Transactions",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/transactions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transactions"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Transaction Types",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/transaction-types",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transaction-types"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Stock",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/stock",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "stock"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Lookup",
+      "item": [
+        {
+          "name": "City Search",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/cities/search?q=che",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cities",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "che"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

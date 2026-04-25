@@ -1,0 +1,15 @@
+meta {
+  name: Occupancy Links Admin
+  type: http
+  seq: 5
+}
+
+get {
+  url: http://localhost:5000/api/occupancy/links
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer paste-access-token-here
+}

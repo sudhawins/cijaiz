@@ -1,0 +1,1663 @@
+openapi: 3.0.3
+info:
+  title: PhotoApp Backend API
+  version: 1.0.0
+  description: |
+    OpenAPI reference generated from the Express routes currently implemented in
+    backend/src/index.ts.
+
+    This spec is intentionally schema-light for endpoints whose payloads are
+    assembled dynamically in SQL-backed handlers.
+servers:
+  - url: http://localhost:5000/api
+    description: Local development
+tags:
+  - name: Auth
+  - name: System
+  - name: Rooms
+  - name: Occupancy
+  - name: Tenants
+  - name: Rental
+  - name: Complaints
+  - name: Daily Status
+  - name: Services
+  - name: Service Allocations
+  - name: Service Consumption
+  - name: Billing
+  - name: Users
+  - name: Roles
+  - name: User Roles
+  - name: Transactions
+  - name: Stock
+  - name: Lookup
+paths:
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: Authenticate a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /auth/refresh:
+    post:
+      tags: [Auth]
+      summary: Refresh access token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshTokenRequest'
+      responses:
+        '200':
+          description: Token refreshed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefreshTokenResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /health:
+    get:
+      tags: [System]
+      summary: Service health check
+      responses:
+        '200':
+          $ref: '#/components/responses/GenericSuccess'
+  /database/status:
+    get:
+      tags: [System]
+      summary: Database connectivity status
+      responses:
+        '200':
+          $ref: '#/components/responses/GenericSuccess'
+  /tables:
+    get:
+      tags: [System]
+      summary: List database tables
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+  /diagnostic/rental-schema:
+    get:
+      tags: [System]
+      summary: Inspect rental schema
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+  /diagnostic/rental-sample:
+    get:
+      tags: [System]
+      summary: Get sample rental rows
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+  /complaints/test-upload:
+    get:
+      tags: [System]
+      summary: Verify complaint upload storage
+      responses:
+        '200':
+          $ref: '#/components/responses/GenericSuccess'
+  /debug/test-blob-delete:
+    post:
+      tags: [System]
+      summary: Test Azure blob deletion
+      responses:
+        '200':
+          $ref: '#/components/responses/GenericSuccess'
+  /rooms:
+    get:
+      tags: [Rooms]
+      summary: List rooms
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+  /rooms/occupancy:
+    get:
+      tags: [Rooms]
+      summary: List room occupancy details
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+  /rooms/vacant:
+    get:
+      tags: [Rooms]
+      summary: List vacant rooms
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+  /rooms/{id}:
+    put:
+      tags: [Rooms]
+      summary: Update room details
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LooseObject'
+      responses:
+        '200':
+          $ref: '#/components/responses/GenericSuccess'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /occupancy/links:
+    get:
+      tags: [Occupancy]
+      summary: Get active occupancy link data
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /occupancy/checkin:
+    post:
+      tags: [Occupancy]
+      summary: Create a new occupancy
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OccupancyCheckInRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/GenericSuccess'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /occupancy/{occupancyId}/checkout:
+    post:
+      tags: [Occupancy]
+      summary: Check out an occupancy
+      parameters:
+        - $ref: '#/components/parameters/OccupancyIdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                checkOutDate:
+                  type: string
+                  format: date
+      responses:
+        '200':
+          $ref: '#/components/responses/GenericSuccess'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /tenants/with-occupancy:
+    get:
+      tags: [Tenants]
+      summary: List tenants with occupancy data
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+  /tenants/{id}:
+    get:
+      tags: [Tenants]
+      summary: Get tenant by id
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags: [Tenants]
+      summary: Update tenant
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TenantRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/GenericSuccess'
+    delete:
+      tags: [Tenants]
+      summary: Delete tenant
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/GenericSuccess'
+  /tenants/{id}/occupancy-history:
+    get:
+      tags: [Tenants]
+      summary: Get tenant occupancy history
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+  /tenants/check-phone/{phone}:
+    get:
+      tags: [Tenants]
+      summary: Check whether phone already exists
+      parameters:
+        - name: phone
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: excludeId
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+  /tenants/search:
+    get:
+      tags: [Tenants]
+      summary: Search tenants by name or phone
+      parameters:
+        - name: name
+          in: query
+          schema:
+            type: string
+        - name: phone
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+  /tenants:
+    post:
+      tags: [Tenants]
+      summary: Create tenant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TenantRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/GenericSuccess'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /tenants/upload:
+    post:
+      tags: [Tenants]
+      summary: Upload tenant photos and proofs
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                photos:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                proofs:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /rental/summary:
+    get:
+      tags: [Rental]
+      summary: Get rental collection summary
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+  /rental/unpaid-tenants:
+    get:
+      tags: [Rental]
+      summary: List unpaid tenants
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+  /rental/unpaid-details/{month}:
+    get:
+      tags: [Rental]
+      summary: Get unpaid details for month
+      parameters:
+        - name: month
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 2026-04
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+  /rental/payments/{monthYear}:
+    get:
+      tags: [Rental]
+      summary: Get payments for month
+      parameters:
+        - name: monthYear
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 2026-04
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+  /rental/occupancy/{occupancyId}:
+    get:
+      tags: [Rental]
+      summary: Get rental history for occupancy
+      parameters:
+        - $ref: '#/components/parameters/OccupancyIdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+  /rental/occupancy/{occupancyId}/summary:
+    get:
+      tags: [Rental]
+      summary: Get occupancy payment summary
+      parameters:
+        - $ref: '#/components/parameters/OccupancyIdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+  /rental/payment-balance:
+    get:
+      tags: [Rental]
+      summary: Get payment balance summary
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+  /rental/upload-payment:
+    post:
+      tags: [Rental]
+      summary: Upload a rent payment screenshot and metadata
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [occupancyId, rentReceived, modeOfPayment, rentReceivedOn, screenshot]
+              properties:
+                occupancyId:
+                  type: integer
+                rentReceived:
+                  type: number
+                modeOfPayment:
+                  type: string
+                rentReceivedOn:
+                  type: string
+                  format: date
+                screenshot:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /complaints:
+    get:
+      tags: [Complaints]
+      summary: List complaints
+      parameters:
+        - name: occupancyId
+          in: query
+          schema:
+            type: integer
+        - name: status
+          in: query
+          schema:
+            type: string
+        - name: type
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+    post:
+      tags: [Complaints]
+      summary: Create complaint
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComplaintRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+  /complaints/types:
+    get:
+      tags: [Complaints]
+      summary: List complaint types
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+  /complaints/statuses:
+    get:
+      tags: [Complaints]
+      summary: List complaint statuses
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+  /complaints/{id}:
+    put:
+      tags: [Complaints]
+      summary: Update complaint
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComplaintRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+    delete:
+      tags: [Complaints]
+      summary: Delete complaint
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/GenericSuccess'
+  /complains/{fileName}:
+    get:
+      tags: [Complaints]
+      summary: Download complaint file
+      parameters:
+        - name: fileName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File content
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /complaints/upload:
+    post:
+      tags: [Complaints]
+      summary: Upload complaint media
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                proof1:
+                  type: string
+                  format: binary
+                proof2:
+                  type: string
+                  format: binary
+                video:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+  /daily-status:
+    get:
+      tags: [Daily Status]
+      summary: List daily status entries
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+    post:
+      tags: [Daily Status]
+      summary: Create daily status entry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DailyStatusRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+  /daily-status/{id}:
+    get:
+      tags: [Daily Status]
+      summary: Get daily status by id
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+    put:
+      tags: [Daily Status]
+      summary: Update daily status
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DailyStatusRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+    delete:
+      tags: [Daily Status]
+      summary: Delete daily status
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/GenericSuccess'
+  /daily-status/{id}/guest-checkins:
+    get:
+      tags: [Daily Status]
+      summary: List guest check-ins for a daily status
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+    post:
+      tags: [Daily Status]
+      summary: Create guest check-in
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GuestCheckinRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+  /daily-status/{dailyStatusId}/guest-checkins/{guestCheckinId}:
+    put:
+      tags: [Daily Status]
+      summary: Update guest check-in
+      parameters:
+        - $ref: '#/components/parameters/DailyStatusIdPath'
+        - $ref: '#/components/parameters/GuestCheckinIdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GuestCheckinRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+    delete:
+      tags: [Daily Status]
+      summary: Delete guest check-in
+      parameters:
+        - $ref: '#/components/parameters/DailyStatusIdPath'
+        - $ref: '#/components/parameters/GuestCheckinIdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/GenericSuccess'
+  /daily-status/{dailyStatusId}/guest-checkins/{guestCheckinId}/upload:
+    post:
+      tags: [Daily Status]
+      summary: Upload proof and photo for guest check-in
+      parameters:
+        - $ref: '#/components/parameters/DailyStatusIdPath'
+        - $ref: '#/components/parameters/GuestCheckinIdPath'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                proof:
+                  type: string
+                  format: binary
+                photo:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+  /daily-status/{id}/media:
+    get:
+      tags: [Daily Status]
+      summary: List media for a daily status
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+  /all-media/:
+    get:
+      tags: [Daily Status]
+      summary: List all daily status media
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+  /daily-status/upload:
+    post:
+      tags: [Daily Status]
+      summary: Upload daily status media
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                dailyStatusId:
+                  type: integer
+                mediaType:
+                  type: string
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+  /daily-status/media/{id}:
+    delete:
+      tags: [Daily Status]
+      summary: Delete daily status media item
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/GenericSuccess'
+  /guest-checkin/{fileName}:
+    get:
+      tags: [Daily Status]
+      summary: Download guest check-in file
+      parameters:
+        - name: fileName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File content
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /services/details:
+    get:
+      tags: [Services]
+      summary: List service definitions
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      tags: [Services]
+      summary: Create service definition
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceDefinitionRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+  /services/details/{id}:
+    get:
+      tags: [Services]
+      summary: Get service definition by id
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+    put:
+      tags: [Services]
+      summary: Update service definition
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceDefinitionRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+    delete:
+      tags: [Services]
+      summary: Delete service definition
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/GenericSuccess'
+  /services/payments:
+    get:
+      tags: [Services]
+      summary: List service payments
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+    post:
+      tags: [Services]
+      summary: Create service payment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServicePaymentRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+  /services/payments/{id}:
+    get:
+      tags: [Services]
+      summary: Get service payment by id
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+    put:
+      tags: [Services]
+      summary: Update service payment
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServicePaymentRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+    delete:
+      tags: [Services]
+      summary: Delete service payment
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/GenericSuccess'
+  /service-allocations:
+    get:
+      tags: [Service Allocations]
+      summary: List service allocations
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+    post:
+      tags: [Service Allocations]
+      summary: Create service allocation
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceAllocationRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+  /service-allocations/{id}:
+    get:
+      tags: [Service Allocations]
+      summary: Get service allocation by id
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+    put:
+      tags: [Service Allocations]
+      summary: Update service allocation
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceAllocationRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+    delete:
+      tags: [Service Allocations]
+      summary: Delete service allocation
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/GenericSuccess'
+  /service-allocations-with-payments:
+    get:
+      tags: [Service Allocations]
+      summary: List service allocations with payments
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+  /service-allocations-for-reading:
+    get:
+      tags: [Service Allocations]
+      summary: List allocations prepared for readings
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+  /service-consumption/previous-month-reading/{serviceAllocId}/{month}/{year}:
+    get:
+      tags: [Service Consumption]
+      summary: Get previous month reading
+      parameters:
+        - name: serviceAllocId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: month
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: year
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+  /service-consumption:
+    get:
+      tags: [Service Consumption]
+      summary: List service consumption rows
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+    post:
+      tags: [Service Consumption]
+      summary: Create service consumption reading
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceConsumptionRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+  /service-consumption/{id}:
+    get:
+      tags: [Service Consumption]
+      summary: Get service consumption by id
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+    delete:
+      tags: [Service Consumption]
+      summary: Delete service consumption
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/GenericSuccess'
+  /tenant-service-charges/calculate/{serviceConsumptionId}:
+    post:
+      tags: [Billing]
+      summary: Calculate tenant charges for service consumption
+      parameters:
+        - name: serviceConsumptionId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+  /tenant-service-charges/{billingYear}/{billingMonth}:
+    get:
+      tags: [Billing]
+      summary: List tenant service charges for a month
+      parameters:
+        - $ref: '#/components/parameters/BillingYearPath'
+        - $ref: '#/components/parameters/BillingMonthPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+  /room-billing-summary/{billingYear}/{billingMonth}:
+    get:
+      tags: [Billing]
+      summary: Get room billing summary for month
+      parameters:
+        - $ref: '#/components/parameters/BillingYearPath'
+        - $ref: '#/components/parameters/BillingMonthPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+  /monthly-billing-report/{billingYear}/{billingMonth}:
+    get:
+      tags: [Billing]
+      summary: Get monthly billing report
+      parameters:
+        - $ref: '#/components/parameters/BillingYearPath'
+        - $ref: '#/components/parameters/BillingMonthPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+  /eb-room-monthly-report/{billingYear}/{billingMonth}:
+    get:
+      tags: [Billing]
+      summary: Get EB room monthly report
+      parameters:
+        - $ref: '#/components/parameters/BillingYearPath'
+        - $ref: '#/components/parameters/BillingMonthPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+  /tenant-monthly-bill/{tenantId}:
+    get:
+      tags: [Billing]
+      summary: Get monthly bill for tenant
+      parameters:
+        - name: tenantId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+  /tenant-service-charges/recalculate/{billingYear}/{billingMonth}:
+    post:
+      tags: [Billing]
+      summary: Recalculate month charges
+      parameters:
+        - $ref: '#/components/parameters/BillingYearPath'
+        - $ref: '#/components/parameters/BillingMonthPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+  /tenant-service-charges:
+    get:
+      tags: [Billing]
+      summary: List all tenant service charges
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+  /tenant-service-charges/{id}/status:
+    put:
+      tags: [Billing]
+      summary: Update service charge status
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [status]
+              properties:
+                status:
+                  type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+  /users:
+    get:
+      tags: [Users]
+      summary: List users
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+    post:
+      tags: [Users]
+      summary: Create user
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+  /users/{id}:
+    get:
+      tags: [Users]
+      summary: Get user by id
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+    put:
+      tags: [Users]
+      summary: Update user
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+    delete:
+      tags: [Users]
+      summary: Delete user
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/GenericSuccess'
+  /roles:
+    get:
+      tags: [Roles]
+      summary: List roles
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+    post:
+      tags: [Roles]
+      summary: Create role
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+  /roles/{id}:
+    get:
+      tags: [Roles]
+      summary: Get role by id
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+    put:
+      tags: [Roles]
+      summary: Update role
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+    delete:
+      tags: [Roles]
+      summary: Delete role
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/GenericSuccess'
+  /user-roles:
+    get:
+      tags: [User Roles]
+      summary: List user-role assignments
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+    post:
+      tags: [User Roles]
+      summary: Create user-role assignment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRoleRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+  /user-roles/{id}:
+    delete:
+      tags: [User Roles]
+      summary: Delete user-role assignment
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/GenericSuccess'
+  /transactions:
+    get:
+      tags: [Transactions]
+      summary: List transactions
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+    post:
+      tags: [Transactions]
+      summary: Create transaction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+  /transactions/{id}:
+    get:
+      tags: [Transactions]
+      summary: Get transaction by id
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+    put:
+      tags: [Transactions]
+      summary: Update transaction
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+    delete:
+      tags: [Transactions]
+      summary: Delete transaction
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/GenericSuccess'
+  /transaction-types:
+    get:
+      tags: [Transactions]
+      summary: List transaction types
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+  /stock:
+    get:
+      tags: [Stock]
+      summary: List stock items
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+    post:
+      tags: [Stock]
+      summary: Create stock item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StockRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+  /stock/{id}:
+    get:
+      tags: [Stock]
+      summary: Get stock item by id
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+    put:
+      tags: [Stock]
+      summary: Update stock item
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StockRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectResponse'
+    delete:
+      tags: [Stock]
+      summary: Delete stock item
+      parameters:
+        - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          $ref: '#/components/responses/GenericSuccess'
+  /cities/search:
+    get:
+      tags: [Lookup]
+      summary: Search cities
+      parameters:
+        - name: q
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/ArrayResponse'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    IdPath:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    OccupancyIdPath:
+      name: occupancyId
+      in: path
+      required: true
+      schema:
+        type: integer
+    DailyStatusIdPath:
+      name: dailyStatusId
+      in: path
+      required: true
+      schema:
+        type: integer
+    GuestCheckinIdPath:
+      name: guestCheckinId
+      in: path
+      required: true
+      schema:
+        type: integer
+    BillingYearPath:
+      name: billingYear
+      in: path
+      required: true
+      schema:
+        type: integer
+        example: 2026
+    BillingMonthPath:
+      name: billingMonth
+      in: path
+      required: true
+      schema:
+        type: integer
+        example: 4
+  responses:
+    GenericSuccess:
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LooseObject'
+    ArrayResponse:
+      description: Array response
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/LooseObject'
+    ObjectResponse:
+      description: Object response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LooseObject'
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Missing or invalid token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: Insufficient role
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    ServerError:
+      description: Unexpected server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    LooseObject:
+      type: object
+      additionalProperties: true
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        details:
+          type: string
+      required: [error]
+    LoginRequest:
+      type: object
+      required: [username, password]
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+        refreshToken:
+          type: string
+        user:
+          type: object
+          properties:
+            id:
+              type: integer
+            username:
+              type: string
+            name:
+              type: string
+            roles:
+              type: string
+            nextLoginDuration:
+              nullable: true
+            lastLogin:
+              nullable: true
+    RefreshTokenRequest:
+      type: object
+      required: [refreshToken]
+      properties:
+        refreshToken:
+          type: string
+    RefreshTokenResponse:
+      type: object
+      properties:
+        token:
+          type: string
+        refreshToken:
+          type: string
+    OccupancyCheckInRequest:
+      type: object
+      properties:
+        tenantId:
+          type: integer
+        roomId:
+          type: integer
+        checkInDate:
+          type: string
+          format: date
+      additionalProperties: true
+    TenantRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        phone:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        roomId:
+          type: integer
+        checkInDate:
+          type: string
+          format: date
+        photoUrl:
+          type: string
+        proof1Url:
+          type: string
+      additionalProperties: true
+    ComplaintRequest:
+      type: object
+      properties:
+        occupancyId:
+          type: integer
+        complaintType:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+        proof1Url:
+          type: string
+        proof2Url:
+          type: string
+        videoUrl:
+          type: string
+      additionalProperties: true
+    DailyStatusRequest:
+      type: object
+      properties:
+        occupancyId:
+          type: integer
+        statusDate:
+          type: string
+          format: date
+        notes:
+          type: string
+      additionalProperties: true
+    GuestCheckinRequest:
+      type: object
+      properties:
+        guestName:
+          type: string
+        relationship:
+          type: string
+        idProof:
+          type: string
+      additionalProperties: true
+    ServiceDefinitionRequest:
+      type: object
+      properties:
+        serviceName:
+          type: string
+        unitType:
+          type: string
+        unitCost:
+          type: number
+      additionalProperties: true
+    ServicePaymentRequest:
+      type: object
+      properties:
+        occupancyId:
+          type: integer
+        serviceId:
+          type: integer
+        amount:
+          type: number
+      additionalProperties: true
+    ServiceAllocationRequest:
+      type: object
+      properties:
+        occupancyId:
+          type: integer
+        serviceId:
+          type: integer
+      additionalProperties: true
+    ServiceConsumptionRequest:
+      type: object
+      properties:
+        serviceAllocId:
+          type: integer
+        currentReading:
+          type: number
+        readingDate:
+          type: string
+          format: date
+      additionalProperties: true
+    UserRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        name:
+          type: string
+      additionalProperties: true
+    RoleRequest:
+      type: object
+      properties:
+        roleName:
+          type: string
+        roleType:
+          type: string
+      additionalProperties: true
+    UserRoleRequest:
+      type: object
+      properties:
+        userId:
+          type: integer
+        roleId:
+          type: integer
+      required: [userId, roleId]
+    TransactionRequest:
+      type: object
+      properties:
+        transactionType:
+          type: string
+        amount:
+          type: number
+        date:
+          type: string
+          format: date
+      additionalProperties: true
+    StockRequest:
+      type: object
+      properties:
+        itemName:
+          type: string
+        quantity:
+          type: number
+        price:
+          type: number
+      additionalProperties: true
