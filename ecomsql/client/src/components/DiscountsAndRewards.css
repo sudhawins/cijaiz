@@ -1,0 +1,468 @@
+/* Discounts and Rewards Component */
+
+.dar-container {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #dee2e6;
+}
+
+.dar-section {
+  margin-bottom: 20px;
+  background: white;
+  padding: 15px;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.dar-section:last-child {
+  margin-bottom: 0;
+}
+
+.dar-title {
+  margin: 0 0 15px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Coupon Input */
+.dar-input-group {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.dar-input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.dar-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.dar-input:disabled {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+}
+
+.dar-btn-apply {
+  padding: 10px 16px;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.dar-btn-apply:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+}
+
+.dar-btn-apply:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Applied Coupon */
+.dar-applied {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, #d4edda, #c3e6cb);
+  border: 1px solid #28a745;
+  padding: 12px 15px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.dar-applied-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.dar-applied-badge {
+  display: inline-block;
+  background: #28a745;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.dar-applied-details {
+  flex: 1;
+}
+
+.dar-applied-code {
+  margin: 0;
+  font-weight: 600;
+  color: #155724;
+  font-size: 14px;
+}
+
+.dar-applied-savings {
+  margin: 4px 0 0 0;
+  color: #155724;
+  font-size: 13px;
+}
+
+.dar-btn-remove {
+  padding: 6px 12px;
+  background: transparent;
+  color: #155724;
+  border: 1px solid #155724;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 12px;
+  transition: all 0.2s;
+}
+
+.dar-btn-remove:hover {
+  background: #155724;
+  color: white;
+}
+
+/* Error Message */
+.dar-error {
+  background: #f8d7da;
+  color: #721c24;
+  padding: 10px 12px;
+  border-radius: 4px;
+  font-size: 13px;
+  margin: 10px 0 0 0;
+  border: 1px solid #f5c6cb;
+}
+
+/* Available Discounts */
+.dar-available {
+  margin-top: 10px;
+}
+
+.dar-toggle {
+  width: 100%;
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  padding: 10px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #495057;
+  text-align: left;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+
+.dar-toggle:hover {
+  background: #e9ecef;
+  border-color: #adb5bd;
+}
+
+.dar-discounts-list {
+  margin-top: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.dar-discount-item {
+  background: #fff;
+  border: 1px solid #dee2e6;
+  padding: 12px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  transition: all 0.2s;
+}
+
+.dar-discount-item:hover {
+  border-color: #007bff;
+  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.15);
+}
+
+.dar-discount-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.dar-discount-header strong {
+  font-size: 13px;
+  color: #333;
+}
+
+.dar-discount-value {
+  background: #007bff;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.dar-discount-desc {
+  margin: 0 0 6px 0;
+  font-size: 12px;
+  color: #666;
+}
+
+.dar-discount-condition {
+  margin: 0 0 8px 0;
+  font-size: 11px;
+  color: #999;
+  font-style: italic;
+}
+
+.dar-btn-use {
+  width: 100%;
+  padding: 6px 8px;
+  background: #ffc107;
+  color: #333;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 12px;
+  transition: all 0.2s;
+}
+
+.dar-btn-use:hover {
+  background: #ffb300;
+  transform: translateY(-1px);
+}
+
+/* Reward Offer Item */
+.reward-offer-item {
+  background: linear-gradient(135deg, #e7f3ff 0%, #f0e7ff 100%);
+  border: 2px solid #667eea;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+}
+
+.reward-offer-item:hover {
+  border-color: #667eea;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.reward-offer-item .dar-discount-value {
+  background: #667eea;
+  color: white;
+}
+
+/* Loyalty Rewards Section */
+.dar-rewards {
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  border: 1px solid #dee2e6;
+}
+
+.dar-loyalty-status {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.dar-tier,
+.dar-points,
+.dar-spent {
+  background: white;
+  padding: 12px;
+  border-radius: 4px;
+  text-align: center;
+  border: 1px solid #dee2e6;
+}
+
+.dar-tier-label,
+.dar-points-label,
+.dar-spent-label {
+  margin: 0;
+  font-size: 12px;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.dar-tier-value,
+.dar-points-value,
+.dar-spent-value {
+  margin: 6px 0 0 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #007bff;
+}
+
+/* Tier Benefits */
+.dar-tier-benefits {
+  background: white;
+  padding: 12px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  border: 1px solid #dee2e6;
+}
+
+.dar-tier-benefits h4 {
+  margin: 0 0 8px 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+}
+
+.dar-benefits-list {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 12px;
+  color: #666;
+}
+
+.dar-benefits-list li {
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+
+/* Redemption */
+.dar-redemption {
+  background: white;
+  padding: 12px;
+  border-radius: 4px;
+  border: 1px solid #dee2e6;
+}
+
+.dar-btn-redeem {
+  width: 100%;
+  padding: 10px;
+  background: linear-gradient(135deg, #28a745, #1e7e34);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.dar-btn-redeem:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+}
+
+.dar-redeem-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dar-redeem-form .dar-input-group {
+  margin-bottom: 0;
+  position: relative;
+}
+
+.dar-redeem-value {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+  font-weight: 600;
+  font-size: 13px;
+  pointer-events: none;
+}
+
+.dar-redeem-form .dar-input {
+  padding-right: 60px;
+}
+
+.dar-redeem-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.dar-btn-confirm {
+  flex: 1;
+  padding: 10px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.dar-btn-confirm:hover:not(:disabled) {
+  background: #218838;
+}
+
+.dar-btn-confirm:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.dar-btn-cancel {
+  flex: 1;
+  padding: 10px;
+  background: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.dar-btn-cancel:hover {
+  background: #5a6268;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dar-container {
+    padding: 15px;
+  }
+
+  .dar-section {
+    padding: 12px;
+  }
+
+  .dar-input-group {
+    flex-direction: column;
+  }
+
+  .dar-loyalty-status {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .dar-applied {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .dar-applied-content {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .dar-btn-remove {
+    width: 100%;
+  }
+}

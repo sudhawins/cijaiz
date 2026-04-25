@@ -1,0 +1,396 @@
+.rewards-management {
+  padding: 30px 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.rewards-management h2 {
+  font-size: 28px;
+  margin-bottom: 30px;
+  color: #222;
+  font-weight: 700;
+  border-left: 4px solid #FF9900;
+  padding-left: 15px;
+}
+
+/* Statistics Cards */
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-left: 4px solid #FF9900;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #999;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: #222;
+}
+
+.stat-value.active {
+  color: #4caf50;
+}
+
+.stat-value.used {
+  color: #2196f3;
+}
+
+.stat-value.expired {
+  color: #f44336;
+}
+
+.stat-value.currency {
+  font-size: 24px;
+  color: #FF9900;
+}
+
+/* Filters Section */
+.filters-section {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 30px;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 10px 20px;
+  border: 2px solid #ddd;
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+  border-color: #FF9900;
+  color: #FF9900;
+}
+
+.filter-btn.active {
+  background-color: #FF9900;
+  color: white;
+  border-color: #FF9900;
+}
+
+.search-section {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.search-input {
+  flex: 1;
+  min-width: 250px;
+  padding: 10px 15px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #FF9900;
+}
+
+.search-btn,
+.reset-btn {
+  padding: 10px 25px;
+  background-color: #FF9900;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-btn:hover {
+  background-color: #e68a00;
+}
+
+.reset-btn {
+  background-color: #666;
+}
+
+.reset-btn:hover {
+  background-color: #555;
+}
+
+/* Message */
+.message {
+  padding: 15px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.message.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Empty State */
+.empty-state {
+  background: white;
+  border-radius: 8px;
+  padding: 60px 20px;
+  text-align: center;
+  color: #999;
+  font-size: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Table */
+.table-container {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 30px;
+}
+
+.rewards-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.rewards-table thead {
+  background: #f8f8f8;
+  border-bottom: 2px solid #ddd;
+}
+
+.rewards-table th {
+  padding: 15px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.rewards-table tbody tr {
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.2s ease;
+}
+
+.rewards-table tbody tr:hover {
+  background-color: #fafafa;
+}
+
+.rewards-table tbody tr.used {
+  background-color: #f5f5f5;
+  opacity: 0.8;
+}
+
+.rewards-table td {
+  padding: 12px 15px;
+}
+
+.code-cell {
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-weight: 600;
+}
+
+.code-cell code {
+  color: #FF9900;
+  font-weight: 600;
+}
+
+.amount-cell {
+  font-weight: 600;
+  color: #4caf50;
+}
+
+.days-cell {
+  font-weight: 600;
+}
+
+.days-cell .warning {
+  color: #f57c00;
+}
+
+.days-cell .expired {
+  color: #f44336;
+}
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.badge-active {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.badge-used {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+.badge-expired {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* Info Section */
+.rewards-info {
+  background: #f0f8ff;
+  border-left: 4px solid #FF9900;
+  border-radius: 6px;
+  padding: 20px;
+  margin-top: 40px;
+}
+
+.rewards-info h3 {
+  font-size: 16px;
+  color: #222;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.rewards-info ul {
+  list-style: none;
+  padding: 0;
+}
+
+.rewards-info li {
+  padding: 8px 0;
+  padding-left: 25px;
+  position: relative;
+  color: #555;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.rewards-info li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #FF9900;
+  font-weight: 700;
+}
+
+.loading {
+  text-align: center;
+  padding: 60px 20px;
+  color: #999;
+  font-size: 16px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .stats-container {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+
+  .rewards-table {
+    font-size: 12px;
+  }
+
+  .rewards-table th,
+  .rewards-table td {
+    padding: 10px 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .rewards-management {
+    padding: 15px 10px;
+  }
+
+  .stats-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .stat-card {
+    padding: 15px;
+  }
+
+  .stat-value {
+    font-size: 24px;
+  }
+
+  .filter-buttons {
+    flex-direction: column;
+  }
+
+  .filter-btn {
+    width: 100%;
+  }
+
+  .search-section {
+    flex-direction: column;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+
+  .search-btn,
+  .reset-btn {
+    width: 100%;
+  }
+
+  .table-container {
+    overflow-x: auto;
+  }
+
+  .rewards-table {
+    font-size: 11px;
+  }
+
+  .rewards-table th,
+  .rewards-table td {
+    padding: 8px 6px;
+  }
+}
